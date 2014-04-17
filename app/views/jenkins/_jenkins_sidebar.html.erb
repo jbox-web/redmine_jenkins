@@ -1,0 +1,5 @@
+<h3><%= l(:label_jenkins) %></h3>
+
+<% if user_allowed_to(:edit_jenkins_settings, @project) %>
+  <p><%= link_to l(:label_settings), {:controller => 'projects', :action => 'settings', :tab => 'jenkins', :id => @project} %></p>
+<% end %>

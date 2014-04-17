@@ -1,0 +1,32 @@
+<div id="jobs-list">
+
+  <%= hidden_field_tag 'jenkins_setting[job_filter][]', '' %>
+
+  <% if @jobs.length == 0 %>
+    <% if !@error.nil? %>
+      <%= @error %>
+    <% else %>
+      <%= l(:label_jobs_list_empty) %>
+    <% end %>
+  <% else %>
+    <table class="table table-hover">
+      <tr>
+        <th><%= image_tag('toggle_check.png', :style => 'display: block; margin-left: 10px; margin-top: 5px;') %></th>
+        <th><%= l(:label_job_name)%></th>
+        <th><%= l(:label_number_of_stored_builds) %></th>
+        <th><%= l(:label_number_of_jenkins_builds) %></th>
+      </tr>
+
+      <% @jobs.each do |job| %>
+        <tr>
+          <td><%= check_box_tag 'jenkins_setting[job_filter][]', job, @jenkins_setting.job_include?(job) %></td>
+          <td><%= job %></td>
+          <td><%= JenkinsBuild.redmine_count_of(job) %></td>
+          <td><%= @jenkins_setting.jenkins_count_of(job) %></td>
+        </tr>
+      <% end %>
+
+    </table>
+  <% end %>
+
+</div>

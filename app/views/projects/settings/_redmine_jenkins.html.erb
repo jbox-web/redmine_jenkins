@@ -1,0 +1,66 @@
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'plugins/bootstrap_switch',    :plugin => 'redmine_jenkins' %>
+  <%= javascript_include_tag 'bootstrap',                   :plugin => 'redmine_jenkins' %>
+
+  <%= stylesheet_link_tag 'bootstrap/bootstrap_switch',     :plugin => 'redmine_jenkins' %>
+
+  <%= javascript_tag do %>
+    $(document).ready(function() {
+      $('.bootstrap-switch').each(function(index, element) {
+        installBootstrapSwitch(element);
+      });
+    });
+  <% end %>
+<% end %>
+
+<%= error_messages_for 'jenkins_setting' %>
+
+<%= form_for @jenkins_setting, :url  => save_jenkins_settings_path(@project),
+                               :html => { :method => :put } do |setting_form| %>
+
+  <div class="box tabular">
+    <p>
+      <label><%= l(:label_url) %></label>
+      <%= setting_form.text_field :url, :size => 50 %>
+      <br />
+      <em><%= l(:label_jenkins_url_desc) %></em>
+    </p>
+
+    <p>
+      <label><%= l(:field_user) %></label>
+      <%= setting_form.text_field :auth_user, :size => 20 %>
+    </p>
+
+    <p>
+      <label><%= l(:field_password) %></label>
+      <%= setting_form.password_field :auth_password, :size => 20 %>
+    </p>
+
+    <p>
+      <label><%= l(:label_show_compact) %></label>
+      <span class="bootstrap-switch switch-small" data-on="primary" data-off="default" data-on-label="<%= l(:label_yes) %>" data-off-label="<%= l(:label_no) %>">
+        <%= setting_form.check_box :show_compact, {}, 'true' %>
+      </span>
+    </p>
+
+    <p>
+      <label><%= l(:label_wait_for_build_id) %></label>
+      <span class="bootstrap-switch switch-small" data-on="primary" data-off="default" data-on-label="<%= l(:label_yes) %>" data-off-label="<%= l(:label_no) %>">
+        <%= setting_form.check_box :wait_for_build_id, {}, 'true' %>
+      </span>
+    </p>
+
+  </div>
+
+  <fieldset class="box">
+    <legend>
+      <%= l(:label_jobs_list) %>
+      &nbsp;-&nbsp;
+      <%= link_to l(:label_update_jobs_list), get_jobs_list_path(@project),
+                                              :remote => true %>
+    </legend>
+    <%= render :partial => 'projects/settings/jobs_list' %>
+  </fieldset>
+
+  <%= submit_tag l(:button_save) %>
+<% end %>

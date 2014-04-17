@@ -1,0 +1,2 @@
+$('#jobs-list').html('<%= escape_javascript(render(:partial => "jenkins/jobs_list")) %>');
+$('#jobs-list table tr').not(':first').effect("highlight", {color: '#D9EDF7'}, 1500);

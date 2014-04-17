@@ -1,0 +1,3 @@
+$('#<%= @job.name.downcase.gsub(" ", "_") %>').replaceWith('<%= escape_javascript(render :partial => "job_solo", :locals => {:job => @job}) %>');
+$('#<%= @job.name.downcase.gsub(" ", "_") %>').effect("highlight", {color: '#D9EDF7'}, 1500);
+initModalBoxes(modals);

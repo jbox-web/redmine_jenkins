@@ -1,0 +1,9 @@
+<% if @error %>
+$('#job-error').html('<%= escape_javascript(@content) %>');
+$('#job-error').show();
+$('#job-info').hide();
+<% else %>
+$('#job-info').html('<%= escape_javascript(@content) %>');
+$('#job-info').show();
+$('#job-error').hide();
+<% end %>

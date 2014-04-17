@@ -1,0 +1,27 @@
+<% content_for :header_tags do %>
+  <%= javascript_include_tag 'bootstrap',                   :plugin => 'redmine_jenkins' %>
+
+  <%= stylesheet_link_tag 'bootstrap/bootstrap_custom',     :plugin => 'redmine_jenkins' %>
+  <%= stylesheet_link_tag 'bootstrap/bootstrap_label',      :plugin => 'redmine_jenkins' %>
+  <%= stylesheet_link_tag 'bootstrap/bootstrap_pagination', :plugin => 'redmine_jenkins' %>
+  <%= stylesheet_link_tag 'bootstrap/bootstrap_tables',     :plugin => 'redmine_jenkins' %>
+  <%= stylesheet_link_tag 'font_awesome',                   :plugin => 'redmine_jenkins' %>
+  <%= stylesheet_link_tag 'application',                    :plugin => 'redmine_jenkins' %>
+<% end %>
+
+<div class="contextual">
+  <%= link_to l(:label_refresh_jobs),
+              refresh_jobs_list_path(@project),
+              :class  => 'icon icon-reload',
+              :remote => true %>
+</div>
+
+<h2><%= l(:label_jobs_list) %></h2>
+
+<div id="jobs-list">
+  <%= render :partial => 'jenkins/jobs_list' %>
+</div>
+
+<% content_for :sidebar do %>
+  <%= render :partial => 'jenkins/jenkins_sidebar' %>
+<% end %>

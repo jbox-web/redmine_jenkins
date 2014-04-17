@@ -1,0 +1,55 @@
+<tr id="<%= job.name.downcase.gsub(' ', '_') %>">
+  <td>
+    <h3><%= link_to job.name, job.url, :target => 'about_blank' %></h3>
+    <% if !job.jenkins_setting.show_compact %>
+      <%= job.description %>
+      <% if job.health_report.any? %>
+        <ul>
+          <% job.health_report.each do |health_report| %>
+            <% weather_icon = image_tag(plugin_asset_link(health_report['iconUrl']), :alt => health_report['iconUrl'], :style => "display: inline-block; margin-top: 5px;") %>
+            <li><%= health_report['description'] %> <%= weather_icon %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>
+  </td>
+
+  <td>
+    <span class="label label-info">
+      <%= link_to_jenkins_job(job) %>
+    </span>
+  </td>
+
+  <td>
+    <span class="label label-<%= state_to_css_class(job.state) %>">
+      <% url = job.latest_build_number == 0 ? 'javascript:void(0);' : job_console_path(@project, job) %>
+      <%= link_to state_to_label(job.state), url,
+                                             :title  => l(:label_see_console_output),
+                                             :remote => true,
+                                             :class  => 'modal-box-close-only' %>
+    </span>
+    <% if job.state == 'running' %>
+      <span class="icon icon-running"></span>
+    <% end %>
+  </td>
+
+  <td>
+    <% history_icon = '<i class="fa fa-list fa-lg"></i>'.html_safe %>
+    <%= link_to history_icon, job_history_path(@project, job),
+                              :title  => l(:label_see_history),
+                              :remote => true,
+                              :class  => 'modal-box-close-only' %>
+  </td>
+
+  <td>
+    <% build_icon = '<i class="fa fa-gears fa-lg"></i>'.html_safe %>
+    <%= link_to build_icon, job_build_path(@project, job),
+                            :title  => l(:label_build_now),
+                            :remote => true if user_allowed_to(:build_jenkins_jobs, @project) %>
+
+    <% refresh_icon = '<i class="fa fa-refresh fa-lg"></i>'.html_safe %>
+    <%= link_to refresh_icon, job_refresh_path(@project, job),
+                              :title  => l(:label_refresh_builds),
+                              :remote => true %>
+  </td>
+</tr>
