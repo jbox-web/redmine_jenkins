@@ -1,5 +1,5 @@
-<% if @jobs.length == 0 %>
-  <div class="nodata"><%= l(:notice_no_jobs) %></div>
+<% if @jobs.empty? %>
+  <div class="nodata"><%= l(:label_no_data) %></div>
 <% else %>
 
   <%= javascript_tag do %>
