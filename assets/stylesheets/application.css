@@ -1,3 +1,4 @@
 .label a { color: #FFFFFF; }
 #jobs-list .fa { display: inline-block; margin: 5px; }
 .icon-running { background-image: url("../images/running.gif"); margin-left: 4px; }
+dt.build_activity  { background-image: url("../images/changeset.png"); }

@@ -11,4 +11,6 @@ apply_patch do
   require_dependency 'redmine_jenkins/patches/project_patch'
   require_dependency 'redmine_jenkins/patches/projects_controller_patch'
   require_dependency 'redmine_jenkins/patches/projects_helper_patch'
+
+  require_dependency 'redmine_jenkins/hooks/add_activity_icon'
 end
