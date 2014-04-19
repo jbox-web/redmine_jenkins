@@ -9,7 +9,6 @@ class CreateJenkinsSettings < ActiveRecord::Migration
       t.column :show_compact,      :boolean, :default => false
       t.column :get_build_details, :boolean, :default => true
       t.column :wait_for_build_id, :boolean, :default => false
-      t.column :job_filter,        :text
     end
   end
 

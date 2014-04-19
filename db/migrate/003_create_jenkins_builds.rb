@@ -6,7 +6,8 @@ class CreateJenkinsBuilds < ActiveRecord::Migration
       t.column :number,         :integer, :null => false
       t.column :result,         :string
       t.column :finished_at,    :datetime
-      t.column :building,       :string
+      t.column :building,       :boolean
+      t.column :duration,       :integer
     end
   end
 
