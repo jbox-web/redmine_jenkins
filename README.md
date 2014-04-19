@@ -13,9 +13,10 @@ You can follow announcements [here](https://github.com/jbox-web/redmine_jenkins/
 Read the documentation and more in the [Wiki](https://github.com/jbox-web/redmine_jenkins/wiki).
 
 ## Copyrights & License
-Redmine Jenkins is completely free and open source and released under the [GPL License](https://github.com/jbox-web/redmine_jenkins/blob/devel/LICENSE).
+Redmine Jenkins is completely free and open source and released under the [GPL 2 License](https://github.com/jbox-web/redmine_jenkins/blob/devel/LICENSE).
 
 Copyright (c) 2014 Nicolas Rodriguez (nrodriguez@jbox-web.com), JBox Web (http://www.jbox-web.com)
+Copyright (c) 2012-2014 Toshiyuki Ando, r-labs
 
 ## Contribute
 
@@ -28,3 +29,5 @@ You can contribute to this plugin in many ways such as :
 You can also donate :)
 
 [![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FBT7E7DAVVEEU)
+
+ 
