@@ -1,36 +1,82 @@
-class JenkinsJobsController < JenkinsController
+class JenkinsJobsController < ApplicationController
   unloadable
 
+  before_filter :find_project
+  before_filter :check_xhr_request
+
   before_filter :can_build_jenkins_jobs, :only => [:build]
-  before_filter :find_job,               :only => [:build, :history, :console, :refresh]
+  before_filter :find_job,               :except => [:index, :new, :create]
+
+  layout Proc.new { |controller| controller.request.xhr? ? 'popup' : 'base' }
+
+  helper :jenkins
+
+
+  def new
+    @job = JenkinsJob.new()
+    @jobs = @jenkins_setting.get_jobs_list
+  end
+
+
+  def create
+    @job = JenkinsJob.new(params[:jenkins_jobs])
+    @job.project = @project
+    @job.jenkins_setting = @jenkins_setting
+
+    respond_to do |format|
+      if @job.save
+        flash[:notice] = l(:notice_job_added)
+
+        format.html { redirect_to success_url }
+        format.js   { render :js => "window.location = #{success_url.to_json};" }
+      else
+        format.html {
+          flash[:error] = l(:notice_job_add_failed)
+          render :action => "create"
+        }
+        format.js { render "form_error", :layout => false }
+      end
+    end
+  end
+
+
+  def edit
+    @jobs = @jenkins_setting.get_jobs_list
+  end
+
+
+  def update
+    respond_to do |format|
+      if @job.update_attributes(params[:jenkins_jobs])
+        flash[:notice] = l(:notice_job_updated)
+
+        format.html { redirect_to success_url }
+        format.js   { render :js => "window.location = #{success_url.to_json};" }
+      else
+        format.html {
+          flash[:error] = l(:notice_job_update_failed)
+          render :action => "edit"
+        }
+        format.js { render "form_error", :layout => false }
+      end
+    end
+  end
+
+
+  def destroy
+    respond_to do |format|
+      if @job.destroy
+        flash[:notice] = l(:notice_job_deleted)
+        format.js { render :js => "window.location = #{success_url.to_json};" }
+      else
+        format.js { render :layout => false }
+      end
+    end
+  end
 
 
   def build
-    build_number = ""
-
-    begin
-      if @jenkins_setting.wait_for_build_id
-        opts = {'build_start_timeout' => 30}
-      else
-        opts = {}
-      end
-      build_number = @jenkins_setting.jenkins_client.job.build(@job.name, {}, opts)
-    rescue => e
-      @error   = true
-      @content = e.message
-    else
-      @error = false
-    end
-
-    if @jenkins_setting.wait_for_build_id
-      @job.latest_build_number = build_number
-      @content = l(:label_build_accepted, :job_name => @job.name, :build_id => ": '#{build_number}'")
-    else
-      @content = l(:label_build_accepted, :job_name => @job.name, :build_id => '')
-    end
-
-    @job.state = 'running'
-    @job.save!
+    @error, @content = @job.build
   end
 
 
@@ -40,17 +86,12 @@ class JenkinsJobsController < JenkinsController
 
 
   def console
-    begin
-      @console_output = @jenkins_setting.jenkins_client.job.get_console_output(@job.name, @job.latest_build_number)['output'].gsub('\r\n', '<br />')
-    rescue JenkinsApi::Exceptions::NotFound => e
-      @console_output = e.message
-    end
+    @console_output = @job.console
   end
 
 
   def refresh
-    @jenkins_setting.update_job(@job)
-    @job.reload
+    @job.update_last_build
   end
 
 
@@ -64,6 +105,26 @@ class JenkinsJobsController < JenkinsController
 
   def find_job
     @job = JenkinsJob.find_by_id(params[:job_id])
+  end
+
+
+  def find_project
+    @project = Project.find(params[:id])
+    if @project.nil?
+      render_404
+    end
+
+    @jenkins_setting = @project.jenkins_setting
+  end
+
+
+  def check_xhr_request
+    @is_xhr ||= request.xhr?
+  end
+
+
+  def success_url
+    url_for(:controller => 'projects', :action => 'settings', :id => @project, :tab => 'jenkins')
   end
 
 end

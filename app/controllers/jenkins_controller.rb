@@ -18,7 +18,7 @@ class JenkinsController < ApplicationController
 
 
   def jobs_list
-    @jenkins_setting.update_jobs
+    @jenkins_setting.update_jobs_build
     find_jobs
   end
 

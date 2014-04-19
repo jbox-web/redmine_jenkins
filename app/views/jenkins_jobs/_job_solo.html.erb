@@ -18,6 +18,7 @@
     <span class="label label-info">
       <%= link_to_jenkins_job(job) %>
     </span>
+    <em>(<%= format_time job.latest_build_date %>)</em>
   </td>
 
   <td>
@@ -25,7 +26,6 @@
       <% url = job.latest_build_number == 0 ? 'javascript:void(0);' : job_console_path(@project, job) %>
       <%= link_to state_to_label(job.state), url,
                                              :title  => l(:label_see_console_output),
-                                             :remote => true,
                                              :class  => 'modal-box-close-only' %>
     </span>
     <% if job.state == 'running' %>
@@ -34,10 +34,25 @@
   </td>
 
   <td>
+    <%= Time.at(job.latest_build_duration/1000).strftime "%M:%S" %>
+  </td>
+
+  <td>
+    <% latest_changesets = job.jenkins_builds.first.jenkins_build_changesets %>
+    <% if latest_changesets.any? %>
+      <ul>
+        <% latest_changesets.each do |changeset| %>
+          <li><%= changeset.comment %> (<%= link_to "##{changeset.revision[0..10]}", {:controller => 'repositories', :action => 'revision',
+                                                                                      :id => @project, :repository_id => job.repository.identifier_param, :rev => changeset.revision} %>)</li>
+        <% end %>
+      </ul>
+    <% end %>
+  </td>
+
+  <td>
     <% history_icon = '<i class="fa fa-list fa-lg"></i>'.html_safe %>
     <%= link_to history_icon, job_history_path(@project, job),
                               :title  => l(:label_see_history),
-                              :remote => true,
                               :class  => 'modal-box-close-only' %>
   </td>
 

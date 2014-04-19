@@ -21,7 +21,7 @@ module RedmineJenkins
             @jobs = []
           else
             @jenkins_setting = @project.jenkins_setting
-            @jobs = @jenkins_setting.get_jobs_list
+            @jobs = @jenkins_setting.jenkins_jobs
           end
         end
 

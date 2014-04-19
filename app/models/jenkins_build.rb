@@ -1,15 +1,19 @@
 class JenkinsBuild < ActiveRecord::Base
   unloadable
 
-  belongs_to :jenkins_job, :class_name => 'JenkinsJob', :foreign_key => 'jenkins_job_id'
-  belongs_to :author,      :class_name => 'User',       :foreign_key => 'author_id'
+  ## Relations
+  belongs_to :jenkins_job
+  belongs_to :author, :class_name => 'User', :foreign_key => 'author_id'
+  has_many   :jenkins_build_changesets, :dependent => :destroy
 
+  ## Validations
   validates_presence_of :jenkins_job_id, :number
-
   validates_uniqueness_of :number, :scope => :jenkins_job_id
 
+  ## Scopes
   default_scope :order => 'number DESC'
 
+  ## Redmine Events
   acts_as_event :datetime    => :finished_at,
                 :title       => :event_name,
                 :description => :event_desc,
@@ -48,10 +52,9 @@ class JenkinsBuild < ActiveRecord::Base
 
   def event_desc
     desc = ""
+
     if self.jenkins_job.health_report.any?
-      self.jenkins_job.health_report.each do |health_report|
-        desc << "#{health_report['description']}\n"
-      end
+      desc << self.jenkins_job.health_report.map{|health_report| health_report['description']}.join("\n")
     end
 
     return desc

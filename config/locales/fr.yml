@@ -6,20 +6,25 @@ fr:
   label_jenkins_url_desc: 'avec http://, https:// ...'
   label_show_compact: Montrer Vue Compacte
   label_wait_for_build_id: "Attendre l'ID de la construction"
+  label_test_connection: Tester la connexion
+  label_jenkins_version: Version de Jenkins
 
   notice_settings_created: Paramètres créés avec succès
   notice_settings_updated: Paramètres mis à jour avec succès
   notice_settings_update_failed: Erreur lors de la mise à jour des paramètres
 
-  label_jobs_list: Liste des tâches
+  label_jobs_list: Liste des jobs
   label_jobs_list_empty: Vide
   label_update_jobs_list: Mettre à jour la liste
   label_number_of_stored_builds: Nombre de builds dans Redmine
   label_number_of_jenkins_builds: Nombre de builds dans Jenkins
+  label_last_changesets: Derniers changements
+  label_add_jenkins_job: Ajouter un job
 
   error_http_error: "HTTP Error %{code}"
   error_invalid_url: URL invalide
   error_no_settings: "No settings for this project. Please <a href='%{url}'>confirm settings</a>"
+  error_jenkins_connection: Erreur lors de la connexion à Jenkins
 
   ### JOBS
   label_job_name: Nom
@@ -35,6 +40,15 @@ fr:
   label_finished_at: Terminé le
   label_see_console_output: Voir la sortie console
   label_build_accepted: "%{job_name}, construction lancée %{build_id}"
+  label_linked_repository: Dépôt lié
+  label_job_duration: Durée
+
+  notice_job_added: Job ajouté
+  notice_job_add_failed: Erreur lors de l'ajout du job
+  notice_job_deleted: Job supprimé
+
+  field_repository: Dépôt
+  field_job_name: Nom du Job
 
   ### ACTIVITY
   label_build: Construction
@@ -44,3 +58,14 @@ fr:
   permission_build_jenkins_jobs: Lancer la construction d'un job
   permission_view_build_activity: "Voir l'activité des jobs"
   permission_edit_jenkins_settings: Modifier les paramètres
+
+  ### QUERY
+  field_jenkins_job: Job
+  field_jenkins_build: Build
+
+  ### MISC
+  label_backup_in_progress: Sauvegarde en cours
+  label_yes: Oui
+  label_no: Non
+  label_url: URL
+  button_ok: OK

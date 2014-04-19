@@ -1,14 +1,27 @@
 <% content_for :header_tags do %>
-  <%= javascript_include_tag 'plugins/bootstrap_switch',    :plugin => 'redmine_jenkins' %>
-  <%= javascript_include_tag 'bootstrap',                   :plugin => 'redmine_jenkins' %>
+  <%= stylesheet_link_tag 'bootstrap/bootstrap_custom',     :plugin => 'redmine_bootstrap' %>
+  <%= stylesheet_link_tag 'bootstrap/bootstrap_tables',     :plugin => 'redmine_bootstrap' %>
+  <%= stylesheet_link_tag 'bootstrap/bootstrap_switch',     :plugin => 'redmine_bootstrap' %>
+  <%= stylesheet_link_tag 'application',                    :plugin => 'redmine_jenkins' %>
 
-  <%= stylesheet_link_tag 'bootstrap/bootstrap_switch',     :plugin => 'redmine_jenkins' %>
+  <%= javascript_include_tag 'plugins/bootstrap_switch',    :plugin => 'redmine_bootstrap' %>
+  <%= javascript_include_tag 'bootstrap',                   :plugin => 'redmine_bootstrap' %>
 
   <%= javascript_tag do %>
+    var modals           = Object();
+    modals.label_save    = '<%= l(:button_save) %>';
+    modals.label_cancel  = '<%= l(:button_cancel) %>';
+    modals.label_ok      = '<%= l(:button_ok) %>';
+    modals.modal_list    = [];
+    modals.modal_list[0] = {'source': '.modal-box', 'target': '#modal-box', 'mode': 'standard'};
+    modals.modal_list[1] = {'source': '.modal-box-close-only', 'target': '#modal-box-close-only', 'mode': 'close-only'};
+
     $(document).ready(function() {
       $('.bootstrap-switch').each(function(index, element) {
         installBootstrapSwitch(element);
       });
+
+      initModalBoxes(modals);
     });
   <% end %>
 <% end %>
@@ -50,17 +63,26 @@
       </span>
     </p>
 
+    <br />
+    <%= submit_tag l(:button_save) %>
+    <%= link_to l(:label_test_connection), test_jenkins_settings_path(@project),
+                                           :class => 'icon icon-test-connection modal-box-close-only' %>
   </div>
 
-  <fieldset class="box">
-    <legend>
-      <%= l(:label_jobs_list) %>
-      &nbsp;-&nbsp;
-      <%= link_to l(:label_update_jobs_list), get_jobs_list_path(@project),
-                                              :remote => true %>
-    </legend>
-    <%= render :partial => 'projects/settings/jobs_list' %>
-  </fieldset>
-
-  <%= submit_tag l(:button_save) %>
 <% end %>
+
+<fieldset class="box">
+  <legend>
+    <%= l(:label_jobs_list) %>
+    <% if !@project.jenkins_setting.nil? %>
+      &nbsp;-&nbsp;
+      <%= link_to l(:label_add_jenkins_job), new_jenkins_job_path,
+                                             :class => 'icon icon-add modal-box' %>
+    <% end %>
+  </legend>
+
+  <%= render :partial => 'projects/settings/jobs_list' %>
+</fieldset>
+
+<div id="modal-box"></div>
+<div id="modal-box-close-only"></div>

@@ -3,11 +3,11 @@ class JenkinsSettingsController < ApplicationController
 
   before_filter :find_project
 
+  layout Proc.new { |controller| controller.request.xhr? ? 'popup' : 'base' }
+
 
   def save
     if !params[:jenkins_setting].nil?
-      params[:jenkins_setting][:job_filter] = params[:jenkins_setting][:job_filter].select{|job| !job.blank?}
-
       if @jenkins_setting.new_record?
         jenkins_setting = JenkinsSetting.new(params[:jenkins_setting])
         jenkins_setting.project_id = @project.id
@@ -27,6 +27,11 @@ class JenkinsSettingsController < ApplicationController
     end
 
     redirect_to :controller => 'projects', :action => 'settings', :tab => 'jenkins', :id => @project
+  end
+
+
+  def test_connection
+    @content = @jenkins_setting.get_jenkins_version
   end
 
 
