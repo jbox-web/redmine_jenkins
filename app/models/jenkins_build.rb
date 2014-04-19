@@ -35,6 +35,15 @@ class JenkinsBuild < ActiveRecord::Base
   end
 
 
+  def self.find_by_changeset(changeset)
+    retval = JenkinsBuild.find(:all,
+                              :order      => "#{JenkinsBuild.table_name}.number",
+                              :conditions => ["#{JenkinsBuildChangeset.table_name}.repository_id = ? and #{JenkinsBuildChangeset.table_name}.revision = ?", changeset.repository_id, changeset.revision],
+                              :joins      => "INNER JOIN #{JenkinsBuildChangeset.table_name} ON #{JenkinsBuildChangeset.table_name}.jenkins_build_id = #{JenkinsBuild.table_name}.id")
+    return retval
+  end
+
+
   def project
     return self.jenkins_job.project
   end
