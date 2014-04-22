@@ -16,5 +16,4 @@ RedmineApp::Application.routes.draw do
 
   match 'projects/:id/jenkins_settings/save',            :to => 'jenkins_settings#save',            :as => 'save_jenkins_settings'
   match 'projects/:id/jenkins_settings/test_connection', :to => 'jenkins_settings#test_connection', :as => 'test_jenkins_settings'
-  match 'projects/:id/jenkins_settings/jobs_list',       :to => 'jenkins_settings#jobs_list',       :as => 'get_jobs_list'
 end

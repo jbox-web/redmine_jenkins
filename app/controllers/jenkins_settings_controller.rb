@@ -35,11 +35,6 @@ class JenkinsSettingsController < ApplicationController
   end
 
 
-  def jobs_list
-    @jobs = @jenkins_setting.get_jobs_list
-  end
-
-
   private
 
 
