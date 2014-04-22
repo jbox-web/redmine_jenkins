@@ -1,5 +1,8 @@
-<% if @content == 0 %>
+<% if @error %>
   <b><%= l(:label_jenkins_version) %></b> : <%= l(:error_jenkins_connection) %>
+  <pre>
+    <%= @content %>
+  </pre>
 <% else %>
   <b><%= l(:label_jenkins_version) %></b> : <%= @content %>
 <% end %>

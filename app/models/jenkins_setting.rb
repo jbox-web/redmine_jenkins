@@ -26,10 +26,13 @@ class JenkinsSetting < ActiveRecord::Base
 
   def get_jenkins_version
     begin
-      jenkins_client.get_jenkins_version
-    rescue Net::OpenTimeout => e
-      0
+      output = jenkins_client.get_jenkins_version
+      error  = false
+    rescue => e
+      output = e.message
+      error  = true
     end
+    return error, output
   end
 
 

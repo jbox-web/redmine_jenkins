@@ -31,7 +31,7 @@ class JenkinsSettingsController < ApplicationController
 
 
   def test_connection
-    @content = @jenkins_setting.get_jenkins_version
+    @error, @content = @jenkins_setting.get_jenkins_version
   end
 
 
