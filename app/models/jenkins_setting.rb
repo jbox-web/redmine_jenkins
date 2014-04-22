@@ -16,11 +16,14 @@ class JenkinsSetting < ActiveRecord::Base
 
 
   def jenkins_client
-    @jenkins_client ||= JenkinsApi::Client.new({:server_url  => self.url,
-                                               :username     => self.auth_user,
-                                               :password     => self.auth_password,
-                                               :open_timeout => 5,
-                                               :read_timeout => 60})
+    options = {}
+    options[:server_url] = self.url
+    options[:http_open_timeout] = 5
+    options[:http_read_timeout] = 60
+    options[:username] = self.auth_user if !self.auth_user.empty?
+    options[:password] = self.auth_password if !self.auth_password.empty?
+
+    @jenkins_client ||= JenkinsApi::Client.new(options)
   end
 
 
