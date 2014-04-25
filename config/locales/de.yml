@@ -1,0 +1,64 @@
+de:
+  label_jenkins: Jenkins
+  label_build_activity_plural: Jenkins
+
+  ### SETTINGS
+  label_jenkins_url_desc: 'inclusive http://, https:// ...'
+  label_show_compact: Kompakte Anzeige
+  label_wait_for_build_id: Warte auf Build Id
+  label_test_connection: Verbindung testen
+  label_jenkins_version: Jenkins version
+
+  notice_settings_created: Einstellungen erfolgreich erstellt
+  notice_settings_updated: Einstellungen erfolgreich aktualisiert
+  notice_settings_update_failed: Einstellungen fehlerhaft
+
+  label_jobs_list: Aufgabenliste
+  label_jobs_list_empty: Leer
+  label_update_jobs_list: Aufgabenliste aktualisieren
+  label_number_of_stored_builds: Anzahl Builds in Redmine
+  label_number_of_jenkins_builds: Anzahl Builds in in Jenkins
+  label_last_changesets: Letzte Änderungen
+  label_add_jenkins_job: Aufgaben hinzufügen
+
+  error_http_error: "HTTP Error %{code}"
+  error_invalid_url: URL ungültig
+  error_no_settings: "Keine Einstellungen gefungen, bitte <a href='%{url}'>überprüfen</a>"
+  error_jenkins_connection: Keine Verbindung mit Jenkins möglich
+
+  ### JOBS
+  label_job_name: Name
+  label_latest_build: Letzter Build
+  label_job_state: Status
+  label_job_history: Historie
+  label_see_history: see Historie
+  label_build_now: Jetzt Bauen
+  label_refresh_jobs: Liste der Aufgaben neu laden
+  label_refresh_builds: Liste der Builds neu laden
+  label_build_number: Auftragsnummer
+  label_build_result: Resultat
+  label_finished_at: Fertig um 
+  label_see_console_output: Konsolenausgabe
+  label_build_accepted: "%{job_name}, Auftrag %{build_id} gestartet"
+  label_linked_repository: zugehöriges Archiv
+  label_job_duration: Dauer
+
+  notice_job_added: Aufgabe hinzugefügt
+  notice_job_add_failed: Hinzufügen der Aufgabe gescheitert
+  notice_job_deleted: Aufgabe gelöscht
+
+  field_repository: Archiv
+  field_job_name: Name
+
+  ### ACTIVITY
+  label_build: Build
+
+  ### PERMISSIONS
+  permission_view_jenkins_jobs: Build anzeigen
+  permission_build_jenkins_jobs: Build starten
+  permission_view_build_activity: Build Aktivität
+  permission_edit_jenkins_settings: Einstellungen bearbeiten
+
+  ### QUERY
+  field_jenkins_job: Aufgabe
+  field_jenkins_build: Build

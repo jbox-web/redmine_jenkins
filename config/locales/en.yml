@@ -1,0 +1,64 @@
+de:
+  label_jenkins: Jenkins
+  label_build_activity_plural: Jenkins
+
+  ### SETTINGS
+  label_jenkins_url_desc: 'with http://, https:// ...'
+  label_show_compact: Show compact view
+  label_wait_for_build_id: "Wait for build id"
+  label_test_connection: Test connection
+  label_jenkins_version: Jenkins version
+
+  notice_settings_created: Settings created successfully
+  notice_settings_updated: Settings updated successfully
+  notice_settings_update_failed: Settings update failed
+
+  label_jobs_list: List of jobs
+  label_jobs_list_empty: Empty
+  label_update_jobs_list: Update Job list
+  label_number_of_stored_builds: Number of stored builds in Redmine
+  label_number_of_jenkins_builds: Number of builds in Jenkins
+  label_last_changesets: Latest changes
+  label_add_jenkins_job: Add a Job
+
+  error_http_error: "HTTP Error %{code}"
+  error_invalid_url: URL invalid
+  error_no_settings: "No settings for this project. Please <a href='%{url}'>confirm settings</a>"
+  error_jenkins_connection: Cannot connect to Jenkins
+
+  ### JOBS
+  label_job_name: Name
+  label_latest_build: Latest build
+  label_job_state: State
+  label_job_history: History
+  label_see_history: see History
+  label_build_now: Build Now
+  label_refresh_jobs: Refesh the list of jobs
+  label_refresh_builds: Refresh the list of builds
+  label_build_number: Build number
+  label_build_result: Result
+  label_finished_at: Finished at
+  label_see_console_output: See console output
+  label_build_accepted: "%{job_name}, build %{build_id} started"
+  label_linked_repository: Linked repository
+  label_job_duration: Duration
+
+  notice_job_added: Job added
+  notice_job_add_failed: Adding job failed
+  notice_job_deleted: Job deleted
+
+  field_repository: Repository
+  field_job_name: Job name
+
+  ### ACTIVITY
+  label_build: Build
+
+  ### PERMISSIONS
+  permission_view_jenkins_jobs: View builds
+  permission_build_jenkins_jobs: Start build
+  permission_view_build_activity: See build activity
+  permission_edit_jenkins_settings: Edit settings
+
+  ### QUERY
+  field_jenkins_job: Job
+  field_jenkins_build: Build
