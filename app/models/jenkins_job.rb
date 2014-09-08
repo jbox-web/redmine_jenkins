@@ -17,6 +17,9 @@ class JenkinsJob < ActiveRecord::Base
   ## Callbacks
   after_create :create_job_builds
 
+  ## Delegate
+  delegate :jenkins_client, :wait_for_build_id, to: :jenkins_setting
+
 
   def url
     return "#{self.jenkins_setting.url}/job/#{self.name}"
@@ -43,7 +46,12 @@ class JenkinsJob < ActiveRecord::Base
 
   def update_last_build
     job_data = update_status
-    create_builds([job_data['builds'].first], true)
+    if job_data['builds'].any?
+      last_build = [job_data['builds'].first]
+    else
+      last_build = []
+    end
+    create_builds(last_build, true)
   end
 
 
@@ -66,7 +74,7 @@ class JenkinsJob < ActiveRecord::Base
     build_number = ""
 
     begin
-      if self.jenkins_setting.wait_for_build_id
+      if wait_for_build_id
         opts = {'build_start_timeout' => 30}
       else
         opts = {}
@@ -79,7 +87,7 @@ class JenkinsJob < ActiveRecord::Base
       error = false
     end
 
-    if self.jenkins_setting.wait_for_build_id
+    if wait_for_build_id
       self.latest_build_number = build_number
       content = l(:label_build_accepted, :job_name => self.name, :build_id => ": '#{build_number}'")
     else
@@ -106,13 +114,9 @@ class JenkinsJob < ActiveRecord::Base
   private
 
 
-  def jenkins_client
-    self.jenkins_setting.jenkins_client
-  end
-
-
   def create_builds(builds, update = false)
     builds.each do |build_data|
+
       ## Find Build in Redmine
       build = JenkinsBuild.find_by_jenkins_job_id_and_number(self.id, build_data['number'])
 

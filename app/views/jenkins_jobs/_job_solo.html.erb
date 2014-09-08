@@ -34,11 +34,11 @@
   </td>
 
   <td>
-    <%= Time.at(job.latest_build_duration/1000).strftime "%M:%S" %>
+    <%= Time.at(job.latest_build_duration/1000).strftime "%M:%S" rescue "00:00" %>
   </td>
 
   <td>
-    <% latest_changesets = job.jenkins_builds.first.jenkins_build_changesets %>
+    <% latest_changesets = job.jenkins_builds.first.jenkins_build_changesets rescue [] %>
     <% if latest_changesets.any? %>
       <ul>
         <% latest_changesets.each do |changeset| %>
