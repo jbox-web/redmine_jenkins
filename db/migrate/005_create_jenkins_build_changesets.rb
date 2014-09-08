@@ -5,7 +5,7 @@ class CreateJenkinsBuildChangesets < ActiveRecord::Migration
       t.column :jenkins_build_id, :integer, :null => false
       t.column :repository_id,    :integer, :null => false
       t.column :revision,         :string,  :null => false
-      t.column :comment,          :text,    :null => false, :limit => 4294967295
+      t.column :comment,          :text,                    :limit => 4294967295
     end
   end
 
