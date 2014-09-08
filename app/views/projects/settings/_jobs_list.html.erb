@@ -18,7 +18,7 @@
       <% @jobs.each do |job| %>
         <tr>
           <td><%= job.name %></td>
-          <td><%= job.repository.identifier.empty? ? 'default' : job.repository.identifier %></td>
+          <td><%= (job.repository.identifier.nil? || job.repository.identifier.empty?) ? 'default' : job.repository.identifier %></td>
           <td><%= JenkinsBuild.redmine_count_of(job.name) %></td>
           <td><%= @jenkins_setting.jenkins_count_of(job.name) %></td>
           <td>
