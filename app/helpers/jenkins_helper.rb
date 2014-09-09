@@ -44,4 +44,22 @@ module JenkinsHelper
     link_to "##{job.latest_build_number}", url, :target => target
   end
 
+
+  def render_repo_name(job)
+    if job.repository.nil?
+      content_tag(:em, 'deleted')
+    else
+      (job.repository.identifier.nil? || job.repository.identifier.empty?) ? 'default' : job.repository.identifier
+    end
+  end
+
+
+  def render_selected_repo(job)
+    if job.repository.nil? || job.repository.identifier.blank?
+      [ 'default' ]
+    else
+      [ job.repository.identifier, job.repository.id ]
+    end
+  end
+
 end

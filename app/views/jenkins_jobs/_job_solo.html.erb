@@ -43,7 +43,7 @@
       <ul>
         <% latest_changesets.each do |changeset| %>
           <li><%= changeset.comment %> (<%= link_to "##{changeset.revision[0..10]}", {:controller => 'repositories', :action => 'revision',
-                                                                                      :id => @project, :repository_id => job.repository.identifier_param, :rev => changeset.revision} %>)</li>
+                                                                                      :id => @project, :repository_id => job.repository.identifier_param, :rev => changeset.revision} if !job.repository.nil? %>)</li>
         <% end %>
       </ul>
     <% end %>

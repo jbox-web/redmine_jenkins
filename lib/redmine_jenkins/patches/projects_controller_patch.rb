@@ -7,6 +7,7 @@ module RedmineJenkins
         base.class_eval do
           unloadable
 
+          helper :jenkins
           alias_method_chain :settings, :redmine_jenkins
         end
       end
