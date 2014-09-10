@@ -1,3 +1,5 @@
+require_dependency 'projects_helper'
+
 module RedmineJenkins
   module Patches
     module ProjectsHelperPatch

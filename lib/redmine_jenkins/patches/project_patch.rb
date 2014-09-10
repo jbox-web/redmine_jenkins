@@ -1,3 +1,5 @@
+require_dependency 'project'
+
 module RedmineJenkins
   module Patches
     module ProjectPatch

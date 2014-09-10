@@ -1,1 +1,1 @@
-$('#job_builds_history').html('<%= escape_javascript(render(:partial => "history")) %>');
+$('#job_builds_history').html('<%= escape_javascript(render partial: "history", locals: {builds: @builds}) %>');

@@ -17,7 +17,7 @@ class JenkinsController < ApplicationController
   end
 
 
-  def jobs_list
+  def refresh
     @jenkins_setting.update_jobs_build
     find_jobs
   end
@@ -27,7 +27,7 @@ class JenkinsController < ApplicationController
 
 
   def find_project
-    @project = Project.find(params[:id])
+    @project = Project.find(params[:project_id])
     if @project.nil?
       render_404
     end

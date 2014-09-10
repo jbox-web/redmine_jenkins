@@ -5,7 +5,7 @@ class JenkinsJob < ActiveRecord::Base
   belongs_to :project
   belongs_to :repository
   belongs_to :jenkins_setting
-  has_many   :jenkins_builds, :dependent => :destroy
+  has_many   :builds, dependent: :destroy, class_name: 'JenkinsBuild'
 
   ## Validations
   validates_presence_of   :project_id, :repository_id, :jenkins_setting_id, :name
@@ -62,8 +62,8 @@ class JenkinsJob < ActiveRecord::Base
     self.description = job_data['description'] || ''
     self.health_report = job_data['healthReport']
     self.latest_build_number   = !job_data['lastBuild'].nil? ? job_data['lastBuild']['number'] : 0
-    self.latest_build_date     = self.jenkins_builds.first.finished_at rescue ''
-    self.latest_build_duration = self.jenkins_builds.first.duration rescue ''
+    self.latest_build_date     = self.builds.first.finished_at rescue ''
+    self.latest_build_duration = self.builds.first.duration rescue ''
     self.save!(:validate => false)
     self.reload
     return job_data

@@ -20,9 +20,9 @@ Redmine::Plugin.register :redmine_jenkins do
   end
 
   Redmine::MenuManager.map :project_menu do |menu|
-    menu.push :jenkins, { :controller => 'jenkins', :action => 'index' }, :caption => :label_jenkins, :after => :repository
+    menu.push :jenkins, { controller: 'jenkins', action: 'index' }, caption: :label_jenkins, after: :repository, param: :project_id
   end
 
-  activity_provider :build_activity, :default => true, :class_name => ['JenkinsBuild']
+  activity_provider :build_activity, default: true, class_name: ['JenkinsBuild']
 
 end

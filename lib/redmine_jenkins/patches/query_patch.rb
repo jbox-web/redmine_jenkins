@@ -1,3 +1,5 @@
+require_dependency 'query'
+
 module RedmineJenkins
   module Patches
     module QueryPatch

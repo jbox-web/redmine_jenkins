@@ -23,7 +23,7 @@
 
   <td>
     <span class="label label-<%= state_to_css_class(job.state) %>">
-      <% url = job.latest_build_number == 0 ? 'javascript:void(0);' : job_console_path(@project, job) %>
+      <% url = job.latest_build_number == 0 ? 'javascript:void(0);' : console_jenkins_job_path(@project, job) %>
       <%= link_to state_to_label(job.state), url,
                                              :title  => l(:label_see_console_output),
                                              :class  => 'modal-box-close-only' %>
@@ -51,19 +51,19 @@
 
   <td>
     <% history_icon = '<i class="fa fa-list fa-lg"></i>'.html_safe %>
-    <%= link_to history_icon, job_history_path(@project, job),
+    <%= link_to history_icon, history_jenkins_job_path(@project, job),
                               :title  => l(:label_see_history),
                               :class  => 'modal-box-close-only' %>
   </td>
 
   <td>
     <% build_icon = '<i class="fa fa-gears fa-lg"></i>'.html_safe %>
-    <%= link_to build_icon, job_build_path(@project, job),
+    <%= link_to build_icon, build_jenkins_job_path(@project, job),
                             :title  => l(:label_build_now),
                             :remote => true if user_allowed_to(:build_jenkins_jobs, @project) %>
 
     <% refresh_icon = '<i class="fa fa-refresh fa-lg"></i>'.html_safe %>
-    <%= link_to refresh_icon, job_refresh_path(@project, job),
+    <%= link_to refresh_icon, refresh_jenkins_job_path(@project, job),
                               :title  => l(:label_refresh_builds),
                               :remote => true %>
   </td>

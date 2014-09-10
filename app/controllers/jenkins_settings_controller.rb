@@ -39,7 +39,7 @@ class JenkinsSettingsController < ApplicationController
 
 
   def find_project
-    @project = Project.find(params[:id])
+    @project = Project.find(params[:project_id])
     if @project.nil?
       render_404
     end

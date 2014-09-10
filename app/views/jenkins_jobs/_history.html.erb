@@ -1,20 +1,20 @@
-<%= paginate @jenkins_builds, :reverse        => false,
-                              :remote         => true,
-                              :next_label     => '&raquo;',
-                              :previous_label => '&laquo;',
-                              :param_name     => :page,
-                              :class          => 'pagination pagination-small pagination-centered',
-                              :params         => {
-                                                   :controller => 'jenkins_jobs',
-                                                   :action     => 'history',
-                                                } %>
+<%= paginate builds, :reverse        => false,
+                     :remote         => true,
+                     :next_label     => '&raquo;',
+                     :previous_label => '&laquo;',
+                     :param_name     => :page,
+                     :class          => 'pagination pagination-small pagination-centered',
+                     :params         => {
+                                          :controller => 'jenkins_jobs',
+                                          :action     => 'history',
+                                       } %>
 
 <table class="table table-hover">
   <th><%= l(:label_build_number) %></th>
   <th><%= l(:label_build_result) %></th>
   <th><%= l(:label_finished_at) %></th>
 
-  <% @jenkins_builds.each do |build| %>
+  <% builds.each do |build| %>
     <tr>
       <td>
         <span class="label label-info">

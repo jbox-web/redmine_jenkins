@@ -12,6 +12,11 @@ class JenkinsJobsController < ApplicationController
   helper :jenkins
 
 
+  def show
+    render_404
+  end
+
+
   def new
     @job = JenkinsJob.new()
     @jobs = @jenkins_setting.get_jobs_list
@@ -81,7 +86,7 @@ class JenkinsJobsController < ApplicationController
 
 
   def history
-    @jenkins_builds = @job.jenkins_builds.paginate(:page => params[:page], :per_page => 5)
+    @builds = @job.builds.paginate(:page => params[:page], :per_page => 5)
   end
 
 
@@ -104,12 +109,15 @@ class JenkinsJobsController < ApplicationController
 
 
   def find_job
-    @job = JenkinsJob.find_by_id(params[:job_id])
+    @job = JenkinsJob.find_by_id(params[:id])
+    if @job.nil?
+      render_404
+    end
   end
 
 
   def find_project
-    @project = Project.find(params[:id])
+    @project = Project.find(params[:project_id])
     if @project.nil?
       render_404
     end

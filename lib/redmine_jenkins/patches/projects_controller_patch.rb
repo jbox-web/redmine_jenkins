@@ -1,3 +1,5 @@
+require_dependency 'projects_controller'
+
 module RedmineJenkins
   module Patches
     module ProjectsControllerPatch
