@@ -14,9 +14,6 @@ class JenkinsJob < ActiveRecord::Base
   ## Serialization
   serialize :health_report, Array
 
-  ## Callbacks
-  after_create :create_job_builds
-
   ## Delegate
   delegate :jenkins_client, :wait_for_build_id, to: :jenkins_setting
 
@@ -31,40 +28,16 @@ class JenkinsJob < ActiveRecord::Base
   end
 
 
-  def create_job_builds
-    job_data = update_status
-    create_builds(job_data['builds'])
-    update_status
-  end
-
-
-  def update_all_builds
-    job_data = update_status
-    create_builds(job_data['builds'], true)
-  end
-
-
-  def update_last_build
-    job_data = update_status
-    if job_data['builds'].any?
-      last_build = [job_data['builds'].first]
-    else
-      last_build = []
-    end
-    create_builds(last_build, true)
-  end
-
-
   def update_status
     job_data = jenkins_client.job.list_details(self.name)
 
-    self.state = color_to_state(job_data['color'])
+    self.state = color_to_state(job_data['color']) || state
     self.description = job_data['description'] || ''
     self.health_report = job_data['healthReport']
     self.latest_build_number   = !job_data['lastBuild'].nil? ? job_data['lastBuild']['number'] : 0
     self.latest_build_date     = self.builds.first.finished_at rescue ''
     self.latest_build_duration = self.builds.first.duration rescue ''
-    self.save!(:validate => false)
+    self.save!
     self.reload
     return job_data
   end
@@ -72,14 +45,11 @@ class JenkinsJob < ActiveRecord::Base
 
   def build
     build_number = ""
+    opts = {}
+    opts['build_start_timeout'] = 30 if wait_for_build_id
 
     begin
-      if wait_for_build_id
-        opts = {'build_start_timeout' => 30}
-      else
-        opts = {}
-      end
-      build_number = jenkins_client.job.build(self.name, {}, opts)
+      build_number = jenkins_client.job.build(name, {}, opts)
     rescue => e
       error   = true
       content = e.message
@@ -87,15 +57,18 @@ class JenkinsJob < ActiveRecord::Base
       error = false
     end
 
-    if wait_for_build_id
-      self.latest_build_number = build_number
-      content = l(:label_build_accepted, :job_name => self.name, :build_id => ": '#{build_number}'")
-    else
-      content = l(:label_build_accepted, :job_name => self.name, :build_id => '')
-    end
+    if !error
+      if wait_for_build_id
+        self.latest_build_number = build_number
+        content = l(:label_build_accepted, :job_name => self.name, :build_id => ": '#{build_number}'")
+      else
+        content = l(:label_build_accepted, :job_name => self.name, :build_id => '')
+      end
 
-    self.state = 'running'
-    self.save!
+      self.state = 'running'
+      self.save!
+      self.reload
+    end
 
     return error, content
   end
@@ -114,57 +87,6 @@ class JenkinsJob < ActiveRecord::Base
   private
 
 
-  def create_builds(builds, update = false)
-    builds.each do |build_data|
-
-      ## Find Build in Redmine
-      build = JenkinsBuild.find_by_jenkins_job_id_and_number(self.id, build_data['number'])
-
-      if build.nil?
-        ## Get BuildDetails from Jenkins
-        build_details = jenkins_client.job.get_build_details(self.name, build_data['number'])
-        build = JenkinsBuild.new
-        build.jenkins_job_id = self.id
-
-        build.number      = build_data['number']
-        build.result      = build_details['result'].nil? ? 'running' : build_details['result']
-        build.building    = build_details['building']
-        build.duration    = build_details['duration']
-        build.finished_at = Time.at(build_details['timestamp'].to_f / 1000)
-        build.save!
-
-        create_changeset(build, build_details['changeSet']['items'])
-      elsif update
-        build_details     = jenkins_client.job.get_build_details(self.name, build_data['number'])
-
-        build.result      = build_details['result'].nil? ? 'running' : build_details['result']
-        build.building    = build_details['building']
-        build.duration    = build_details['duration']
-        build.finished_at = Time.at(build_details['timestamp'].to_f / 1000)
-        build.save!
-
-        create_changeset(build, build_details['changeSet']['items'])
-      end
-    end
-    return true
-  end
-
-
-  def create_changeset(build, changesets)
-    changesets.each do |changeset|
-      build_changeset = JenkinsBuildChangeset.find_by_jenkins_build_id_and_revision(build.id, changeset['commitId'])
-
-      if build_changeset.nil?
-        build_changeset = JenkinsBuildChangeset.new(:jenkins_build_id => build.id,
-                                                    :repository_id    => self.repository_id,
-                                                    :revision         => changeset['commitId'],
-                                                    :comment          => changeset['comment'])
-        build_changeset.save!
-      end
-    end
-  end
-
-
   def color_to_state(color)
     state = ''
     case color
@@ -175,6 +97,8 @@ class JenkinsJob < ActiveRecord::Base
       when 'notbuilt'
         state = 'notbuilt'
       when 'blue_anime'
+        state = 'running'
+      when 'red_anime'
         state = 'running'
     end
     return state

@@ -12,7 +12,7 @@
 
 <div class="contextual">
   <%= link_to l(:label_refresh_jobs),
-              refresh_jobs_list_path(@project),
+              jenkins_refresh_path(@project),
               :class  => 'icon icon-reload',
               :remote => true %>
 </div>
@@ -20,9 +20,9 @@
 <h2><%= l(:label_jobs_list) %></h2>
 
 <div id="jobs-list">
-  <%= render :partial => 'jenkins/jobs_list' %>
+  <%= render partial: 'jenkins/jobs_list', locals: {jobs: @jobs} %>
 </div>
 
 <% content_for :sidebar do %>
-  <%= render :partial => 'jenkins/jenkins_sidebar' %>
+  <%= render partial: 'jenkins/jenkins_sidebar' %>
 <% end %>

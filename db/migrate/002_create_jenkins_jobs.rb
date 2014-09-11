@@ -11,6 +11,7 @@ class CreateJenkinsJobs < ActiveRecord::Migration
       t.column :latest_build_duration, :integer
       t.column :state,                 :string
       t.column :health_report,         :text
+      t.column :builds_to_keep,        :integer, :default => 10
       t.column :description,           :text
       t.column :created_at,            :datetime
       t.column :updated_at,            :datetime

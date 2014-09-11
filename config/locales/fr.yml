@@ -18,6 +18,7 @@ fr:
   label_update_jobs_list: Mettre à jour la liste
   label_number_of_stored_builds: Nombre de builds dans Redmine
   label_number_of_jenkins_builds: Nombre de builds dans Jenkins
+  label_number_of_builds_to_keep: Nombre de builds à conserver dans Redmine
   label_last_changesets: Derniers changements
   label_add_jenkins_job: Ajouter un job
 
@@ -49,6 +50,7 @@ fr:
 
   field_repository: Dépôt
   field_job_name: Nom du Job
+  field_builds_to_keep: Nombre de builds à conserver
 
   ### ACTIVITY
   label_build: Construction

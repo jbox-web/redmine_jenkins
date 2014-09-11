@@ -1,6 +1,6 @@
 module WillPaginateHelper
 
-  class LinkRenderer < WillPaginate::ActionView::LinkRenderer
+  class LinkRenderer < ::WillPaginate::ActionView::LinkRenderer
 
     def to_html
       if @options.has_key?(:reverse) && @options[:reverse] == true

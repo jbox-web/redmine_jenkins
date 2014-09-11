@@ -160,7 +160,7 @@ module RedmineJenkins
                                 "jenkins_job",
                                 {:type   => :list_optional,
                                  :order  => @available_filters.size + 1,
-                                 :values => jenkins_settings.jenkins_jobs.collect {|job| [job.name, job.id.to_s]}
+                                 :values => jenkins_settings.jobs.collect {|job| [job.name, job.id.to_s]}
                                 },
                                 JenkinsJob.table_name,
                                 "id")

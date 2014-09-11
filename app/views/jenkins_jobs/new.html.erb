@@ -16,6 +16,10 @@
     <%= f.select :repository_id, options_for_select(@project.repositories.collect {|r| [ r.identifier.blank? ? 'default' : r.identifier, r.id ]}) %>
   </p>
 
+  <p>
+    <%= f.text_field :builds_to_keep %>
+  </p>
+
   <% if !@is_xhr %>
     <%= submit_tag l(:button_save), :disable_with => l(:label_backup_in_progress) %>
     <%= link_to l(:button_cancel), url_for(:controller => 'projects', :action => 'settings', :id => @project, :tab => 'jenkins') %>

@@ -19,7 +19,7 @@ class JenkinsJobsController < ApplicationController
 
   def new
     @job = JenkinsJob.new()
-    @jobs = @jenkins_setting.get_jobs_list
+    @jobs = @jenkins_setting.get_jobs_list - @jenkins_setting.jobs.map(&:name)
   end
 
 
@@ -31,6 +31,7 @@ class JenkinsJobsController < ApplicationController
     respond_to do |format|
       if @job.save
         flash[:notice] = l(:notice_job_added)
+        BuildManager.new(@job).create_builds
 
         format.html { redirect_to success_url }
         format.js   { render :js => "window.location = #{success_url.to_json};" }
@@ -54,6 +55,7 @@ class JenkinsJobsController < ApplicationController
     respond_to do |format|
       if @job.update_attributes(params[:jenkins_jobs])
         flash[:notice] = l(:notice_job_updated)
+        BuildManager.new(@job).update_all_builds
 
         format.html { redirect_to success_url }
         format.js   { render :js => "window.location = #{success_url.to_json};" }
@@ -96,7 +98,7 @@ class JenkinsJobsController < ApplicationController
 
 
   def refresh
-    @job.update_last_build
+    BuildManager.new(@job).update_last_build
   end
 
 

@@ -28,44 +28,44 @@
 
 <%= error_messages_for 'jenkins_setting' %>
 
-<%= form_for @jenkins_setting, :url  => save_jenkins_settings_path(@project),
-                               :html => { :method => :put } do |setting_form| %>
+<%= form_for @jenkins_setting, :url  => jenkins_settings_save_path(@project),
+                               :html => { :method => :put } do |f| %>
 
   <div class="box tabular">
     <p>
       <label><%= l(:label_url) %></label>
-      <%= setting_form.text_field :url, :size => 50 %>
+      <%= f.text_field :url, :size => 50 %>
       <br />
       <em><%= l(:label_jenkins_url_desc) %></em>
     </p>
 
     <p>
       <label><%= l(:field_user) %></label>
-      <%= setting_form.text_field :auth_user, :size => 20 %>
+      <%= f.text_field :auth_user, :size => 20 %>
     </p>
 
     <p>
       <label><%= l(:field_password) %></label>
-      <%= setting_form.password_field :auth_password, :size => 20 %>
+      <%= f.password_field :auth_password, :size => 20 %>
     </p>
 
     <p>
       <label><%= l(:label_show_compact) %></label>
       <span class="bootstrap-switch switch-small" data-on="primary" data-off="default" data-on-label="<%= l(:label_yes) %>" data-off-label="<%= l(:label_no) %>">
-        <%= setting_form.check_box :show_compact, {}, 'true' %>
+        <%= f.check_box :show_compact, {}, 'true' %>
       </span>
     </p>
 
     <p>
       <label><%= l(:label_wait_for_build_id) %></label>
       <span class="bootstrap-switch switch-small" data-on="primary" data-off="default" data-on-label="<%= l(:label_yes) %>" data-off-label="<%= l(:label_no) %>">
-        <%= setting_form.check_box :wait_for_build_id, {}, 'true' %>
+        <%= f.check_box :wait_for_build_id, {}, 'true' %>
       </span>
     </p>
 
     <br />
     <%= submit_tag l(:button_save) %>
-    <%= link_to l(:label_test_connection), test_jenkins_settings_path(@project),
+    <%= link_to l(:label_test_connection), jenkins_settings_test_connection_path(@project),
                                            :class => 'icon icon-test-connection modal-box-close-only' %>
   </div>
 
@@ -76,7 +76,7 @@
     <%= l(:label_jobs_list) %>
     <% if !@project.jenkins_setting.nil? %>
       &nbsp;-&nbsp;
-      <%= link_to l(:label_add_jenkins_job), new_jenkins_job_path,
+      <%= link_to l(:label_add_jenkins_job), new_jenkins_job_path(@project),
                                              :class => 'icon icon-add modal-box' %>
     <% end %>
   </legend>

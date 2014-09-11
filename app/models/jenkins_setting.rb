@@ -5,14 +5,11 @@ class JenkinsSetting < ActiveRecord::Base
 
   ## Relations
   belongs_to :project
-  has_many   :jenkins_jobs, :dependent => :destroy
+  has_many   :jobs, dependent: :destroy, class_name: 'JenkinsJob'
 
   ## Validations
   validates_presence_of   :project_id, :url
   validates_uniqueness_of :project_id
-
-  ## Callbacks
-  after_save :update_all_jobs_build
 
 
   def jenkins_client
@@ -49,28 +46,21 @@ class JenkinsSetting < ActiveRecord::Base
 
 
   def update_jobs_status
-    self.jenkins_jobs.each do |job|
+    jobs.each do |job|
       job.update_status
     end
   end
 
 
   def update_jobs_build
-    self.jenkins_jobs.each do |job|
-      job.update_last_build
-    end
-  end
-
-
-  def update_all_jobs_build
-    self.jenkins_jobs.each do |job|
-      job.update_all_builds
+    jobs.each do |job|
+      BuildManager.new(job).update_last_build
     end
   end
 
 
   def jenkins_count_of(job_name)
-    jenkins_client.job.list_details(job_name)['builds'].size
+    jenkins_client.job.list_details(job_name)['builds'].size rescue 0
   end
 
 end

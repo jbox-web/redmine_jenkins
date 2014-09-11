@@ -1,4 +1,4 @@
-<% if @jobs.empty? %>
+<% if jobs.empty? %>
   <div class="nodata"><%= l(:label_no_data) %></div>
 <% else %>
 
@@ -33,8 +33,8 @@
       <th></th>
     </tr>
 
-    <% @jobs.each do |job| %>
-      <%= render :partial => 'jenkins_jobs/job_solo', :locals => {:job => job} %>
+    <% jobs.each do |job| %>
+      <%= render partial: 'jenkins_jobs/job_solo', locals: {job: job} %>
     <% end %>
   </table>
 <% end %>
