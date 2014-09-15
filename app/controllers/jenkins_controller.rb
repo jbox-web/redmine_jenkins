@@ -18,7 +18,22 @@ class JenkinsController < ApplicationController
 
 
   def refresh
-    @jenkins_setting.update_jobs_build
+    errors = []
+
+    @jenkins_setting.jobs.each do |job|
+      manager = BuildManager.new(job)
+      if !manager.update_last_build
+        errors += manager.errors
+      end
+    end
+
+    errors = errors.uniq
+
+    if errors.any?
+      @errors = "#{l(:error_jenkins_connection)} : #{errors.join(', ')}"
+    else
+      @errors = ''
+    end
     find_jobs
   end
 

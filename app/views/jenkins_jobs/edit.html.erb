@@ -9,7 +9,7 @@
   <div id="validation_messages_job"><%= error_messages_for 'job' %></div>
 
   <p>
-    <%= f.select :name, options_for_select(@jobs.collect {|job| [job, job]}, [@job.name, @job.name]), :label => l(:field_job_name) %>
+    <%= f.select :name, options_for_select(@jobs.collect {|job| [job, job]}, [@job.name, @job.name]), {}, {:disabled => true} %>
   </p>
 
   <p>

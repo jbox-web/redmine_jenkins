@@ -8,6 +8,7 @@ fr:
   label_wait_for_build_id: "Attendre l'ID de la construction"
   label_test_connection: Tester la connexion
   label_jenkins_version: Version de Jenkins
+  label_jenkins_jobs_count: Nombre de jobs dans Jenkins
 
   notice_settings_created: Paramètres créés avec succès
   notice_settings_updated: Paramètres mis à jour avec succès

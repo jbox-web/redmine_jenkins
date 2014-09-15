@@ -1,5 +1,3 @@
-require 'jenkins_api_client'
-
 class JenkinsSetting < ActiveRecord::Base
   unloadable
 
@@ -12,34 +10,20 @@ class JenkinsSetting < ActiveRecord::Base
   validates_uniqueness_of :project_id
 
 
-  def jenkins_client
-    options = {}
-    options[:server_url] = self.url
-    options[:http_open_timeout] = 5
-    options[:http_read_timeout] = 60
-    options[:username] = self.auth_user if !self.auth_user.empty?
-    options[:password] = self.auth_password if !self.auth_password.empty?
-
-    @jenkins_client ||= JenkinsApi::Client.new(options)
+  def jenkins_connection
+    jenkins_client.connection
   end
 
 
-  def get_jenkins_version
-    begin
-      output = jenkins_client.get_jenkins_version
-      error  = false
-    rescue => e
-      output = e.message
-      error  = true
-    end
-    return error, output
+  def test_connection
+    test_data = jenkins_client.test_connection
   end
 
 
   def get_jobs_list
     begin
-      jenkins_client.job.list_all
-    rescue Net::OpenTimeout => e
+      jenkins_connection.job.list_all
+    rescue => e
       []
     end
   end
@@ -52,15 +36,24 @@ class JenkinsSetting < ActiveRecord::Base
   end
 
 
-  def update_jobs_build
-    jobs.each do |job|
-      BuildManager.new(job).update_last_build
-    end
-  end
-
-
   def jenkins_count_of(job_name)
-    jenkins_client.job.list_details(job_name)['builds'].size rescue 0
+    jenkins_connection.job.list_details(job_name)['builds'].size rescue 0
   end
+
+
+  private
+
+
+    def jenkins_client
+      @jenkins_client ||= JenkinsClient.new(self.url, jenkins_options)
+    end
+
+
+    def jenkins_options
+      options = {}
+      options[:username] = self.auth_user if !self.auth_user.empty?
+      options[:password] = self.auth_password if !self.auth_password.empty?
+      options
+    end
 
 end

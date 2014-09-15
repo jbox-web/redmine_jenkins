@@ -1,8 +1,12 @@
-<% if @error %>
-  <b><%= l(:label_jenkins_version) %></b> : <%= l(:error_jenkins_connection) %>
+<% if @content[:errors].any? %>
+  <p><b><%= l(:label_jenkins_version) %></b> : <%= @content[:version] %></p>
+  <p><b><%= l(:label_jenkins_jobs_count) %></b> : <%= @content[:jobs_count] %></p>
   <pre>
-    <%= @content %>
+    <% @content[:errors].each do |error| %>
+    <%= error %>
+    <% end %>
   </pre>
 <% else %>
-  <b><%= l(:label_jenkins_version) %></b> : <%= @content %>
+  <p><b><%= l(:label_jenkins_version) %></b> : <%= @content[:version] %></p>
+  <p><b><%= l(:label_jenkins_jobs_count) %></b> : <%= @content[:jobs_count] %></p>
 <% end %>

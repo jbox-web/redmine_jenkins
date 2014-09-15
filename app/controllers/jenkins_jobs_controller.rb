@@ -55,7 +55,11 @@ class JenkinsJobsController < ApplicationController
     respond_to do |format|
       if @job.update_attributes(params[:jenkins_jobs])
         flash[:notice] = l(:notice_job_updated)
-        BuildManager.new(@job).update_all_builds
+
+        manager = BuildManager.new(@job)
+        if !manager.update_all_builds
+          flash[:error] = "#{l(:error_jenkins_connection)} : #{manager.errors.join(', ')}"
+        end
 
         format.html { redirect_to success_url }
         format.js   { render :js => "window.location = #{success_url.to_json};" }
@@ -98,7 +102,12 @@ class JenkinsJobsController < ApplicationController
 
 
   def refresh
-    BuildManager.new(@job).update_last_build
+    manager = BuildManager.new(@job)
+    if !manager.update_last_build
+      @errors = "#{l(:error_jenkins_connection)} : #{manager.errors.join(', ')}"
+    else
+      @errors = ''
+    end
   end
 
 

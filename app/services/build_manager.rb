@@ -1,35 +1,89 @@
 class BuildManager
 
+  attr_reader :data
+  attr_reader :errors
+
+
   def initialize(job)
     @job    = job
-    @data   = @job.update_status
-    @client = @job.jenkins_client
+    @client = @job.jenkins_connection
+    @errors = []
   end
 
 
   def create_builds
-    do_create_builds(@data['builds'].take(@job.builds_to_keep))
-    @job.update_status
+    if job_status_updated?
+      do_create_builds(data['builds'].take(@job.builds_to_keep))
+      job_status_updated?
+    else
+      return false
+    end
   end
 
 
   def update_all_builds
-    do_create_builds(@data['builds'].take(@job.builds_to_keep), true)
+    if job_status_updated?
+      do_create_builds(data['builds'].take(@job.builds_to_keep), true)
+    else
+      return false
+    end
   end
 
 
   def update_last_build
-    if @data['builds'].any?
-      last_build = [@data['builds'].first]
-    else
-      last_build = []
-    end
+    if job_status_updated?
+      if data['builds'].any?
+        last_build = [data['builds'].first]
+      else
+        last_build = []
+      end
 
-    do_create_builds(last_build, true)
+      do_create_builds(last_build, true)
+    else
+      return false
+    end
   end
 
 
   private
+
+
+    def job_status_updated?
+      begin
+        @data = @client.job.list_details(@job.name)
+      rescue => e
+        @errors << e.message
+        return false
+      else
+        @job.state                 = color_to_state(data['color']) || @job.state
+        @job.description           = data['description'] || ''
+        @job.health_report         = data['healthReport']
+        @job.latest_build_number   = !data['lastBuild'].nil? ? data['lastBuild']['number'] : 0
+        @job.latest_build_date     = @job.builds.first.finished_at rescue ''
+        @job.latest_build_duration = @job.builds.first.duration rescue ''
+        @job.save!
+        @job.reload
+        return true
+      end
+    end
+
+
+    def color_to_state(color)
+      state = ''
+      case color
+        when 'blue'
+          state = 'success'
+        when 'red'
+          state = 'failure'
+        when 'notbuilt'
+          state = 'notbuilt'
+        when 'blue_anime'
+          state = 'running'
+        when 'red_anime'
+          state = 'running'
+      end
+      return state
+    end
 
 
     def do_create_builds(builds, update = false)
@@ -67,6 +121,10 @@ class BuildManager
         if @job.builds.size > @job.builds_to_keep
           @job.builds.last.destroy
         end
+      end
+
+      if @job.builds.size > @job.builds_to_keep
+        @job.builds.last(@job.builds.size - @job.builds_to_keep).map(&:destroy)
       end
 
       return true
