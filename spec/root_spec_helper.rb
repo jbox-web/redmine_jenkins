@@ -1,8 +1,5 @@
-require 'codeclimate-test-reporter'
-## Start CodeClimate TestReporter
-CodeClimate::TestReporter.start
-
 require 'simplecov'
+
 ## Start Simplecov
 SimpleCov.start 'rails' do
   add_group 'Redmine Jenkins', 'plugins/redmine_jenkins'
