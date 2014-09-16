@@ -1,6 +1,3 @@
-# require 'rspec'
-# require 'rspec/core/rake_task'
-
 namespace :redmine_jenkins do
 
   desc "Show library version"

@@ -60,6 +60,12 @@ cp "redmine/plugins/${PLUGIN_NAME}/spec/root_spec_helper.rb" "redmine/spec/spec_
 echo "Done !"
 echo ""
 
+echo "#### UPDATE GEMFILE"
+echo "Update shoulda to 3.5.0"
+sed -i 's/gem "shoulda", "~> 3.3.2"/gem "shoulda", "~> 3.5.0"/' "redmine/Gemfile"
+echo "Done !"
+echo ""
+
 echo "######################"
 echo "CURRENT DIRECTORY LISTING"
 echo ""
