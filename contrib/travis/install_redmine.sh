@@ -66,6 +66,11 @@ sed -i 's/gem "shoulda", "~> 3.3.2"/gem "shoulda", "~> 3.5.0"/' "redmine/Gemfile
 echo "Done !"
 echo ""
 
+echo "Update capybara to 2.2.0"
+sed -i 's/gem "capybara", "~> 2.1.0"/gem "capybara", "~> 2.2.0"/' "redmine/Gemfile"
+echo "Done !"
+echo ""
+
 echo "######################"
 echo "CURRENT DIRECTORY LISTING"
 echo ""
