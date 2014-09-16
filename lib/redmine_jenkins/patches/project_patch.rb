@@ -8,7 +8,7 @@ module RedmineJenkins
         base.class_eval do
           unloadable
 
-          has_one :jenkins_setting, :foreign_key => 'project_id', :class_name => 'JenkinsSetting', :dependent => :destroy
+          has_one :jenkins_setting, dependent: :destroy
         end
       end
 

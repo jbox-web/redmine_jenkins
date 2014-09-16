@@ -94,7 +94,9 @@ class BuildManager
 
         if build.nil?
           ## Get BuildDetails from Jenkins
-          build_details = @client.job.get_build_details(@job.name, build_data['number'])
+          build_details     = get_build_details(@job.name, build_data['number'])
+
+          ## Create a new AR object to store data
           build = JenkinsBuild.new
           build.jenkins_job_id = @job.id
 
@@ -103,12 +105,15 @@ class BuildManager
           build.building    = build_details['building']
           build.duration    = build_details['duration']
           build.finished_at = Time.at(build_details['timestamp'].to_f / 1000)
+          build.author      = User.current
           build.save!
 
           create_changeset(build, build_details['changeSet']['items'])
         elsif update
-          build_details     = @client.job.get_build_details(@job.name, build_data['number'])
+          ## Get BuildDetails from Jenkins
+          build_details     = get_build_details(@job.name, build_data['number'])
 
+          ## Update the AR object with new data
           build.result      = build_details['result'].nil? ? 'running' : build_details['result']
           build.building    = build_details['building']
           build.duration    = build_details['duration']
@@ -143,6 +148,11 @@ class BuildManager
           build_changeset.save!
         end
       end
+    end
+
+
+    def get_build_details(job_name, build_number)
+      @client.job.get_build_details(job_name, build_number)
     end
 
 end

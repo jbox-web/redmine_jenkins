@@ -40,4 +40,14 @@ class JenkinsClient
     return test
   end
 
+
+  def get_jobs_list
+    connection.job.list_all rescue []
+  end
+
+
+  def number_of_builds_for(job_name)
+    connection.job.list_details(job_name)['builds'].size rescue 0
+  end
+
 end

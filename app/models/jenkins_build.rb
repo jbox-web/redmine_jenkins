@@ -3,15 +3,19 @@ class JenkinsBuild < ActiveRecord::Base
 
   ## Relations
   belongs_to :jenkins_job
-  belongs_to :author, :class_name => 'User', :foreign_key => 'author_id'
-  has_many   :jenkins_build_changesets, :dependent => :destroy
+  belongs_to :author, class_name: 'User', foreign_key: 'author_id'
+  has_many   :changesets, class_name: 'JenkinsBuildChangeset', dependent: :destroy
 
   ## Validations
-  validates_presence_of :jenkins_job_id, :number
-  validates_uniqueness_of :number, :scope => :jenkins_job_id
+  validates :jenkins_job_id,  presence: true
+  validates :author_id,       presence: true
+  validates :number,          presence: true, uniqueness: { scope: :jenkins_job_id }
+
+  ## Delegators
+  delegate :project, to: :jenkins_job
 
   ## Scopes
-  default_scope :order => 'number DESC'
+  scope :ordered, -> { order('number DESC')  }
 
   ## Redmine Events
   acts_as_event :datetime    => :finished_at,
@@ -28,50 +32,49 @@ class JenkinsBuild < ActiveRecord::Base
                             :find_options => {:include => {:jenkins_job => :project}}
 
 
-  def self.redmine_count_of(job_name)
-    job = JenkinsJob.find_by_name(job_name)
-    return 0 if job.nil?
-    return JenkinsBuild.find_all_by_jenkins_job_id(job.id).count
+  class << self
+
+    def redmine_count_of(job_name)
+      job = JenkinsJob.find_by_name(job_name)
+      return 0 if job.nil?
+      return JenkinsBuild.find_all_by_jenkins_job_id(job.id).count
+    end
+
+
+    def find_by_changeset(changeset)
+      retval = JenkinsBuild.find(:all,
+                                :order      => "#{JenkinsBuild.table_name}.number",
+                                :conditions => ["#{JenkinsBuildChangeset.table_name}.repository_id = ? and #{JenkinsBuildChangeset.table_name}.revision = ?", changeset.repository_id, changeset.revision],
+                                :joins      => "INNER JOIN #{JenkinsBuildChangeset.table_name} ON #{JenkinsBuildChangeset.table_name}.jenkins_build_id = #{JenkinsBuild.table_name}.id")
+      return retval
+    end
+
   end
 
 
-  def self.find_by_changeset(changeset)
-    retval = JenkinsBuild.find(:all,
-                              :order      => "#{JenkinsBuild.table_name}.number",
-                              :conditions => ["#{JenkinsBuildChangeset.table_name}.repository_id = ? and #{JenkinsBuildChangeset.table_name}.revision = ?", changeset.repository_id, changeset.revision],
-                              :joins      => "INNER JOIN #{JenkinsBuildChangeset.table_name} ON #{JenkinsBuildChangeset.table_name}.jenkins_build_id = #{JenkinsBuild.table_name}.id")
-    return retval
-  end
-
-
-  def project
-    return self.jenkins_job.project
-  end
-
-
-  def event_name
-    return "#{l(:label_build)} #{self.jenkins_job.name} ##{self.number} : #{self.result.capitalize}"
+  def url
+    "#{jenkins_job.url}/#{number}"
   end
 
 
   def event_url
-    return url
+    url
+  end
+
+
+  def event_name
+    "#{l(:label_build)} #{jenkins_job.name} ##{number} : #{result.capitalize}"
   end
 
 
   def event_desc
     desc = ""
 
-    if self.jenkins_job.health_report.any?
-      desc << self.jenkins_job.health_report.map{|health_report| health_report['description']}.join("\n")
+    if jenkins_job.health_report.any?
+      desc << jenkins_job.health_report.map{|health_report| health_report['description']}.join("\n")
     end
 
     return desc
-  end
-
-
-  def url
-    return "#{self.jenkins_job.jenkins_setting.url}/job/#{self.jenkins_job.name}/#{self.number}"
   end
 
 end

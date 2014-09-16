@@ -5,26 +5,28 @@ class JenkinsJob < ActiveRecord::Base
   belongs_to :project
   belongs_to :repository
   belongs_to :jenkins_setting
-  has_many   :builds, dependent: :destroy, class_name: 'JenkinsBuild'
+  has_many   :builds, class_name: 'JenkinsBuild', dependent: :destroy
 
   ## Validations
-  validates_presence_of   :project_id, :repository_id, :jenkins_setting_id, :name
-  validates_uniqueness_of :name, :scope => :jenkins_setting_id
+  validates :project_id,         presence: true
+  validates :repository_id,      presence: true
+  validates :jenkins_setting_id, presence: true
+  validates :name,               presence: true, uniqueness: { scope: :jenkins_setting_id }
 
-  ## Serialization
+  ## Serializations
   serialize :health_report, Array
 
-  ## Delegate
+  ## Delegators
   delegate :jenkins_connection, :wait_for_build_id, to: :jenkins_setting
 
 
   def url
-    "#{self.jenkins_setting.url}/job/#{self.name}"
+    "#{jenkins_setting.url}/job/#{name}"
   end
 
 
   def latest_build_url
-    "#{self.jenkins_setting.url}/job/#{self.name}/#{self.latest_build_number}"
+    "#{url}/#{latest_build_number}"
   end
 
 
@@ -61,7 +63,7 @@ class JenkinsJob < ActiveRecord::Base
 
   def console
     begin
-      console_output = jenkins_connection.job.get_console_output(self.name, self.latest_build_number)['output'].gsub('\r\n', '<br />')
+      console_output = jenkins_connection.job.get_console_output(name, latest_build_number)['output'].gsub('\r\n', '<br />')
     rescue => e
       console_output = e.message
     end

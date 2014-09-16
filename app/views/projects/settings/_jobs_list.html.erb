@@ -21,7 +21,7 @@
           <td><%= job.name %></td>
           <td><%= render_repo_name(job) %></td>
           <td><%= JenkinsBuild.redmine_count_of(job.name) %></td>
-          <td><%= @jenkins_setting.jenkins_count_of(job.name) %></td>
+          <td><%= @jenkins_setting.number_of_builds_for(job.name) %></td>
           <td><%= job.builds_to_keep %></td>
           <td>
             <%= link_to l(:button_edit), edit_jenkins_job_path(@project, job),

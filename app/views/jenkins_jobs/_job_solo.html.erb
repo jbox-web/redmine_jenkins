@@ -38,7 +38,7 @@
   </td>
 
   <td>
-    <% latest_changesets = job.jenkins_builds.first.jenkins_build_changesets rescue [] %>
+    <% latest_changesets = job.jenkins_builds.first.changesets rescue [] %>
     <% if latest_changesets.any? %>
       <ul>
         <% latest_changesets.each do |changeset| %>

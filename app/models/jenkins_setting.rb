@@ -3,11 +3,11 @@ class JenkinsSetting < ActiveRecord::Base
 
   ## Relations
   belongs_to :project
-  has_many   :jobs, dependent: :destroy, class_name: 'JenkinsJob'
+  has_many   :jobs, class_name: 'JenkinsJob', dependent: :destroy
 
   ## Validations
-  validates_presence_of   :project_id, :url
-  validates_uniqueness_of :project_id
+  validates :project_id,  presence: true, uniqueness: true
+  validates :url,         presence: true
 
 
   def jenkins_connection
@@ -16,28 +16,17 @@ class JenkinsSetting < ActiveRecord::Base
 
 
   def test_connection
-    test_data = jenkins_client.test_connection
+    jenkins_client.test_connection
   end
 
 
   def get_jobs_list
-    begin
-      jenkins_connection.job.list_all
-    rescue => e
-      []
-    end
+    jenkins_client.get_jobs_list
   end
 
 
-  def update_jobs_status
-    jobs.each do |job|
-      job.update_status
-    end
-  end
-
-
-  def jenkins_count_of(job_name)
-    jenkins_connection.job.list_details(job_name)['builds'].size rescue 0
+  def number_of_builds_for(job_name)
+    jenkins_client.number_of_builds_for(job_name)
   end
 
 
@@ -45,14 +34,14 @@ class JenkinsSetting < ActiveRecord::Base
 
 
     def jenkins_client
-      @jenkins_client ||= JenkinsClient.new(self.url, jenkins_options)
+      @jenkins_client ||= JenkinsClient.new(url, jenkins_options)
     end
 
 
     def jenkins_options
       options = {}
-      options[:username] = self.auth_user if !self.auth_user.empty?
-      options[:password] = self.auth_password if !self.auth_password.empty?
+      options[:username] = auth_user if !auth_user.empty?
+      options[:password] = auth_password if !auth_password.empty?
       options
     end
 

@@ -6,6 +6,7 @@ class JenkinsBuildChangeset < ActiveRecord::Base
   belongs_to :repository
 
   ## Validations
-  validates_presence_of   :jenkins_build_id, :repository_id, :revision
-  validates_uniqueness_of :revision, :scope => :jenkins_build_id
+  validates :jenkins_build_id, presence: true
+  validates :repository_id,    presence: true
+  validates :revision,         presence: true, uniqueness: { scope: :jenkins_build_id }
 end
