@@ -41,4 +41,5 @@ before_script:
   - bundle exec rake redmine:plugins:migrate
   - bundle exec rake db:test:prepare
 script:
-  - bundle exec rake redmine_jenkins:test
+  # - bundle exec rake redmine_jenkins:test
+  - bundle exec rspec plugins/redmine_jenkins/spec/
