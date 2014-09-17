@@ -7,7 +7,7 @@ namespace :redmine_jenkins do
     RSpec::Core::RakeTask.new(:spec) do |config|
       config.rspec_opts = "plugins/redmine_jenkins/spec --color"
     end
-    task :all => ['ci:setup:rspec', 'spec']
+    task :all => ['spec']
   end
 
 
