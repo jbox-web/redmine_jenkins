@@ -5,8 +5,8 @@ gem 'will_paginate'
 
 
 group :development, :test do
-  gem 'rspec'
-  gem 'rspec-rails'
+  gem 'rspec', '~> 3.0.0'
+  gem 'rspec-rails', '~> 3.0.1'
 
   gem 'shoulda', '~> 3.5.0'
   gem 'shoulda-matchers'
