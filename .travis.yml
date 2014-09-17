@@ -41,9 +41,7 @@ before_install:
 before_script:
   - echo $(pwd)
   - mysql -e 'create database redmine;'
-  # - mysql -e 'create database redmine_test;'
   - psql -c 'create database redmine;' -U postgres
-  - psql -c 'create database redmine_test;' -U postgres
   - bundle exec rake generate_secret_token
   - bundle exec rake db:migrate
   - bundle exec rake redmine:load_default_data
