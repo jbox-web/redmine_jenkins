@@ -8,8 +8,6 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
 
-  gem 'simplecov'
-
   gem 'shoulda', '~> 3.5.0'
   gem 'shoulda-matchers'
   gem 'shoulda-context'
@@ -19,5 +17,10 @@ group :development, :test do
   gem 'faker'
   gem 'database_cleaner'
 
-  gem "codeclimate-test-reporter", :require => nil
+  # Code coverage
+  gem 'simplecov'
+  gem 'simplecov-rcov'
+
+  # Junit results
+  gem 'ci_reporter_rspec', '~> 1.0.0'
 end

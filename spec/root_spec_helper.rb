@@ -1,4 +1,11 @@
 require 'simplecov'
+require 'simplecov-rcov'
+
+## Configure SimpleCov
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::RcovFormatter
+]
 
 ## Start Simplecov
 SimpleCov.start 'rails' do

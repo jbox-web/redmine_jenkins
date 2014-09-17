@@ -6,8 +6,12 @@ REDMINE_NAME="redmine-${REDMINE_VERSION}"
 REDMINE_PACKAGE="${REDMINE_NAME}.tar.gz"
 REDMINE_URL="${REDMINE_SOURCE_URL}/${REDMINE_PACKAGE}"
 
-PLUGIN_SOURCE="jbox-web"
-PLUGIN_NAME="redmine_jenkins"
+GITHUB_USER=${GITHUB_USER:-jbox-web}
+GITHUB_PROJECT=${GITHUB_PROJECT:-redmine_jenkins}
+GITHUB_SOURCE="${GITHUB_USER}/${GITHUB_PROJECT}"
+
+PLUGIN_PATH=${PLUGIN_PATH:-$GITHUB_SOURCE}
+PLUGIN_NAME=${PLUGIN_NAME:-$GITHUB_PROJECT}
 
 CURRENT_DIR=$(pwd)
 
@@ -18,7 +22,8 @@ echo ""
 echo "REDMINE_VERSION : ${REDMINE_VERSION}"
 echo "REDMINE_URL     : ${REDMINE_URL}"
 echo "CURRENT_DIR     : ${CURRENT_DIR}"
-echo "PLUGIN_ORIGIN   : ${PLUGIN_SOURCE}/${PLUGIN_NAME}"
+echo "GITHUB_SOURCE   : ${GITHUB_SOURCE}"
+echo "PLUGIN_PATH     : ${PLUGIN_PATH}"
 echo ""
 
 echo "#### GET TARBALL"
@@ -32,8 +37,8 @@ echo "Done !"
 echo ""
 
 echo "#### MOVE PLUGIN"
-mv "${PLUGIN_SOURCE}/${PLUGIN_NAME}" "${REDMINE_NAME}/plugins"
-rmdir "${PLUGIN_SOURCE}"
+mv "${PLUGIN_PATH}" "${REDMINE_NAME}/plugins"
+rmdir "${PLUGIN_PATH}"
 echo "Done !"
 echo ""
 
@@ -55,7 +60,7 @@ echo "Done !"
 echo ""
 
 echo "#### INSTALL RSPEC FILE"
-mkdir "redmine/spec"
+mkdir -p "redmine/spec"
 cp "redmine/plugins/${PLUGIN_NAME}/spec/root_spec_helper.rb" "redmine/spec/spec_helper.rb"
 echo "Done !"
 echo ""
