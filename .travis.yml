@@ -8,6 +8,7 @@ gemfile:
 branches:
   only:
     - devel
+    - feat_jenkins
 env:
   - "REDMINE_LANG=en REDMINE_VERSION=2.5.2 DATABASE_ADAPTER=mysql"
   - "REDMINE_LANG=en REDMINE_VERSION=2.5.2 DATABASE_ADAPTER=postgresql"
