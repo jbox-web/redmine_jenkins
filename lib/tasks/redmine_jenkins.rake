@@ -1,12 +1,17 @@
-require 'ci/reporter/rake/rspec'
-
 namespace :redmine_jenkins do
 
   namespace :ci do
-    ENV["CI_REPORTS"] = Rails.root.join('junit').to_s
-    RSpec::Core::RakeTask.new do |task|
-      task.rspec_opts = "plugins/redmine_jenkins/spec --color"
+    begin
+      require 'ci/reporter/rake/rspec'
+
+      RSpec::Core::RakeTask.new do |task|
+        task.rspec_opts = "plugins/redmine_jenkins/spec --color"
+      end
+    rescue Exception => e
+    else
+      ENV["CI_REPORTS"] = Rails.root.join('junit').to_s
     end
+
     task :all => ['ci:setup:rspec', 'spec']
   end
 
