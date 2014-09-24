@@ -6,7 +6,7 @@
       <% if job.health_report.any? %>
         <ul>
           <% job.health_report.each do |health_report| %>
-            <% weather_icon = image_tag(plugin_asset_link(health_report['iconUrl']), :alt => health_report['iconUrl'], :style => "display: inline-block; margin-top: 5px;") %>
+            <% weather_icon = image_tag(plugin_asset_link('redmine_jenkins', health_report['iconUrl']), :alt => health_report['iconUrl'], :style => "display: inline-block; margin-top: 5px;") %>
             <li><%= health_report['description'] %> <%= weather_icon %></li>
           <% end %>
         </ul>
