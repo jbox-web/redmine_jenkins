@@ -65,7 +65,18 @@ cp "redmine/plugins/${PLUGIN_NAME}/spec/root_spec_helper.rb" "redmine/spec/spec_
 echo "Done !"
 echo ""
 
-echo "#### UPDATE GEMFILE"
+echo "#### UPDATE PLUGIN GEMFILE"
+echo "Enable rspec to 3.0.0"
+sed -i "s/# gem 'rspec', '~> 3.0.0'/gem 'rspec', '~> 3.0.0'/" "redmine/plugins/${PLUGIN_NAME}/Gemfile"
+echo "Done !"
+echo ""
+
+echo "Enable rspec-rails to 3.0.1"
+sed -i "s/# gem 'rspec-rails', '~> 3.0.1'/gem 'rspec-rails', '~> 3.0.1'/" "redmine/plugins/${PLUGIN_NAME}/Gemfile"
+echo "Done !"
+echo ""
+
+echo "#### UPDATE REDMINE GEMFILE"
 echo "Update shoulda to 3.5.0"
 sed -i 's/gem "shoulda", "~> 3.3.2"/gem "shoulda", "~> 3.5.0"/' "redmine/Gemfile"
 echo "Done !"
