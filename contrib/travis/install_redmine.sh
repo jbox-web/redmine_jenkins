@@ -76,6 +76,11 @@ sed -i "s/# gem 'rspec-rails', '~> 3.0.1'/gem 'rspec-rails', '~> 3.0.1'/" "redmi
 echo "Done !"
 echo ""
 
+echo "Enable shoulda to 3.5.0"
+sed -i "s/# gem 'shoulda', '~> 3.5.0'/gem 'shoulda', '~> 3.5.0'/" "redmine/plugins/${PLUGIN_NAME}/Gemfile"
+echo "Done !"
+echo ""
+
 echo "#### UPDATE REDMINE GEMFILE"
 echo "Update shoulda to 3.5.0"
 sed -i 's/gem "shoulda", "~> 3.3.2"/gem "shoulda", "~> 3.5.0"/' "redmine/Gemfile"
