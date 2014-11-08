@@ -1,0 +1,64 @@
+pl:
+  label_jenkins: Jenkins
+  label_build_activity_plural: Jenkins
+
+  ### SETTINGS
+  label_jenkins_url_desc: 'z http://, https:// ...'
+  label_show_compact: Pokaż widok kompaktowy
+  label_wait_for_build_id: "Oczekiwanie na ID testu"
+  label_test_connection: Test połączenia
+  label_jenkins_version: Wersja Jenkins
+
+  notice_settings_created: Ustawienia utworzone poprawnie
+  notice_settings_updated: Ustawienia zaktualizowane poprawnie
+  notice_settings_update_failed: Nieudana aktualizaja ustawień
+
+  label_jobs_list: Lista zadań
+  label_jobs_list_empty: Pusta
+  label_update_jobs_list: Aktualizuj listę zadań
+  label_number_of_stored_builds: Liczba testów przechowywanych w Redmine
+  label_number_of_jenkins_builds: Liczba testów w Jenkins
+  label_last_changesets: Ostatnie zmiany
+  label_add_jenkins_job: Dodaj zadanie
+
+  error_http_error: "Błąd HTTP %{code}"
+  error_invalid_url: Niepoprawny URL
+  error_no_settings: "Brak ustawień dla tego projektu. Proszę <a href='%{url}'>potwierdzić ustawienia</a>"
+  error_jenkins_connection: Nie można połączyć się z Jenkins
+
+  ### JOBS
+  label_job_name: Nazwa
+  label_latest_build: Ostatni test
+  label_job_state: Stan
+  label_job_history: Historia
+  label_see_history: Zobacz historię
+  label_build_now: Testuj teraz
+  label_refresh_jobs: Odśwież listę zadań
+  label_refresh_builds: Odśwież listę testów
+  label_build_number: Numer testu
+  label_build_result: Rezultat
+  label_finished_at: Skończone o
+  label_see_console_output: Zobacz wyjście konsoli
+  label_build_accepted: "%{job_name}, test %{build_id} rozpoczęty"
+  label_linked_repository: Przypisane repozytorium
+  label_job_duration: Czas trwania
+
+  notice_job_added: Zadanie dodane
+  notice_job_add_failed: Dodawanie zadania nieudane
+  notice_job_deleted: Zadanie usunięte
+
+  field_repository: Repozytorium
+  field_job_name: Nazwa zadania
+
+  ### ACTIVITY
+  label_build: Test
+
+  ### PERMISSIONS
+  permission_view_jenkins_jobs: Testy
+  permission_build_jenkins_jobs: Rozpocznij test
+  permission_view_build_activity: Zobacz aktywność testu
+  permission_edit_jenkins_settings: Edytuj ustawienia
+
+  ### QUERY
+  field_jenkins_job: Zadanie
+  field_jenkins_build: Test
