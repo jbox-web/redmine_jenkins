@@ -57,7 +57,7 @@ class JenkinsBuild < ActiveRecord::Base
   end
 
 
-  def event_url
+  def event_url(options = {})
     url
   end
 
