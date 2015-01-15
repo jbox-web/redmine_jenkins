@@ -8,6 +8,7 @@ en:
   label_wait_for_build_id: "Wait for build id"
   label_test_connection: Test connection
   label_jenkins_version: Jenkins version
+  label_jenkins_jobs_count: Number of jobs in Jenkins
 
   notice_settings_created: Settings created successfully
   notice_settings_updated: Settings updated successfully
@@ -18,6 +19,7 @@ en:
   label_update_jobs_list: Update Job list
   label_number_of_stored_builds: Number of stored builds in Redmine
   label_number_of_jenkins_builds: Number of builds in Jenkins
+  label_number_of_builds_to_keep: Number of builds to keep in Redmine
   label_last_changesets: Latest changes
   label_add_jenkins_job: Add a Job
 
@@ -49,6 +51,7 @@ en:
 
   field_repository: Repository
   field_job_name: Job name
+  field_builds_to_keep: Builds to keep
 
   ### ACTIVITY
   label_build: Build
