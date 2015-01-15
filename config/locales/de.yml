@@ -7,7 +7,8 @@ de:
   label_show_compact: Kompakte Anzeige
   label_wait_for_build_id: Warte auf Build Id
   label_test_connection: Verbindung testen
-  label_jenkins_version: Jenkins version
+  label_jenkins_version: Jenkins' Version
+  label_jenkins_jobs_count: Anzahl Aufgaben in Jenkins
 
   notice_settings_created: Einstellungen erfolgreich erstellt
   notice_settings_updated: Einstellungen erfolgreich aktualisiert
@@ -17,13 +18,14 @@ de:
   label_jobs_list_empty: Leer
   label_update_jobs_list: Aufgabenliste aktualisieren
   label_number_of_stored_builds: Anzahl Builds in Redmine
-  label_number_of_jenkins_builds: Anzahl Builds in in Jenkins
+  label_number_of_jenkins_builds: Anzahl Builds in Jenkins
+  label_number_of_builds_to_keep: Anzahl in Redmine zu haltender Builds
   label_last_changesets: Letzte Änderungen
   label_add_jenkins_job: Aufgaben hinzufügen
 
   error_http_error: "HTTP Error %{code}"
   error_invalid_url: URL ungültig
-  error_no_settings: "Keine Einstellungen gefungen, bitte <a href='%{url}'>überprüfen</a>"
+  error_no_settings: "Keine Einstellungen gefunden, bitte <a href='%{url}'>überprüfen</a>"
   error_jenkins_connection: Keine Verbindung mit Jenkins möglich
 
   ### JOBS
@@ -49,6 +51,7 @@ de:
 
   field_repository: Archiv
   field_job_name: Name
+  field_builds_to_keep: Anzahl zu behaltender Builds
 
   ### ACTIVITY
   label_build: Build
