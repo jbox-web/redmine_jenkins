@@ -61,7 +61,7 @@ class JenkinsController < ApplicationController
 
 
   def find_jobs
-    @jobs = JenkinsJob.find_all_by_project_id(@project.id)
+    @jobs = JenkinsJob.where(:project_id => @project.id)
   end
 
 end
