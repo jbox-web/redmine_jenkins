@@ -1,0 +1,67 @@
+ru:
+  label_jenkins: Jenkins
+  label_build_activity_plural: Jenkins
+
+  ### SETTINGS
+  label_jenkins_url_desc: 'with http://, https:// ...'
+  label_show_compact: Компактный прорстмотр
+  label_wait_for_build_id: "Wait for build id"
+  label_test_connection: Проверить соединение
+  label_jenkins_version: Версия Jenkins
+  label_jenkins_jobs_count: Количество задач Jenkins
+
+  notice_settings_created: Настройки успешно созданы
+  notice_settings_updated: Настройки успешно изменены
+  notice_settings_update_failed: Ошибка при сохранении настроек
+
+  label_jobs_list: Список задач
+  label_jobs_list_empty: Пусто
+  label_update_jobs_list: Обновить список задач
+  label_number_of_stored_builds: Количество сохраненых сборок в Redmine
+  label_number_of_jenkins_builds: Количество сборок в Jenkins
+  label_number_of_builds_to_keep: Количество хранимых сборок в Redmine
+  label_last_changesets: Последние изменения
+  label_add_jenkins_job: Добавить задачу
+
+  error_http_error: "HTTP Error %{code}"
+  error_invalid_url: Некорректный URL
+  error_no_settings: "Нет настроек для данного проекта. Пожалуйста <a href='%{url}'>подтвердите настройки</a>"
+  error_jenkins_connection: Невозможно соединиться с Jenkins
+
+  ### JOBS
+  label_job_name: Название
+  label_latest_build: Последняя сборка
+  label_job_state: Статус
+  label_job_history: История
+  label_see_history: просмотр истории
+  label_build_now: Собрать сейчас
+  label_refresh_jobs: Обновить список задач
+  label_refresh_builds: Обновить список сборок
+  label_build_number: Номер сборки
+  label_build_result: Результат
+  label_finished_at: Завершена в
+  label_see_console_output: Вывод консоли
+  label_build_accepted: "%{job_name}, сборка %{build_id} запущена"
+  label_linked_repository: Присоединенное хранилище
+  label_job_duration: Продолжительность
+
+  notice_job_added: Задача добавлена
+  notice_job_add_failed: Ошибка при добавлении задачи
+  notice_job_deleted: Задача удалена
+
+  field_repository: Репозиторий
+  field_job_name: Название задачи
+  field_builds_to_keep: Количество хранимых  сборок
+
+  ### ACTIVITY
+  label_build: Собрать
+
+  ### PERMISSIONS
+  permission_view_jenkins_jobs: Просмотр сборок
+  permission_build_jenkins_jobs: Запуск сборок
+  permission_view_build_activity: Просмотр активности сборок
+  permission_edit_jenkins_settings: Изменение настроек
+
+  ### QUERY
+  field_jenkins_job: Задача
+  field_jenkins_build: Сборка
