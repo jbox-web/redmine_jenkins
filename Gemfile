@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 gem 'jenkins_api_client', '~> 1.0.1'
 gem 'will_paginate'
 
+# HAML views
+gem 'haml-rails'
 
 group :development, :test do
   gem 'rspec', '~> 3.0.0'
