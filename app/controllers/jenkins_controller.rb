@@ -46,6 +46,7 @@ class JenkinsController < ApplicationController
 
     def find_jenkins_settings
       if @project.jenkins_setting.nil?
+        flash.now[:warning] = l(:error_no_settings, url: settings_project_path(@project, 'jenkins'))
         render action: 'jenkins_instructions'
       end
     end

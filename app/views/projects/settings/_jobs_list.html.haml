@@ -1,0 +1,32 @@
+#jobs-list
+  - if @jobs.length == 0
+    - if !@error.nil?
+      = @error
+    - else
+      = l(:label_jobs_list_empty)
+  - else
+    %table{ class: 'table table-hover' }
+      %thead
+        %tr
+          %th= l(:label_job_name)
+          %th= l(:label_linked_repository)
+          %th= l(:label_number_of_stored_builds)
+          %th= l(:label_number_of_jenkins_builds)
+          %th= l(:label_number_of_builds_to_keep)
+          %th
+
+      %tbody
+        - @jobs.each do |job|
+          %tr
+            %td= job.name
+            %td= render_repo_name(job)
+            %td= JenkinsBuild.redmine_count_of(job.name)
+            %td= @jenkins_setting.number_of_builds_for(job.name)
+            %td= job.builds_to_keep
+            %td
+              = link_to l(:button_edit), edit_jenkins_job_path(@project, job), class: 'icon icon-edit modal-box'
+              = link_to l(:button_delete), jenkins_job_path(@project, job),
+                                           remote:  true,
+                                           method:  :delete,
+                                           confirm: l(:text_are_you_sure),
+                                           class:   'icon icon-del'

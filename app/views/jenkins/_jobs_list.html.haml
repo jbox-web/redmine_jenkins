@@ -1,0 +1,27 @@
+- if jobs.empty?
+  .nodata= l(:label_no_data)
+
+- else
+
+  #job-info{ class: 'flash notice', style: 'display: none;' }
+  #job-error{ class: 'flash error', style: 'display: none;' }
+
+  %table{ class: 'table table-hover' }
+    %thead
+      %tr
+        %th= l(:label_job_name)
+        %th= l(:label_latest_build)
+        %th= l(:label_job_state)
+        %th= l(:label_job_duration)
+        %th= l(:label_last_changesets)
+        %th= l(:label_job_history)
+        %th
+
+    %tbody
+      - jobs.each do |job|
+        = render partial: 'jenkins_jobs/job_solo', locals: { job: job }
+
+  :javascript
+    $(document).ready(function() {
+      initModalBoxes(modals);
+    });

@@ -4,8 +4,6 @@ class JenkinsJobsController < ApplicationController
   # Redmine ApplicationController method
   before_filter :find_project_by_project_id
 
-  before_filter :check_xhr_request
-
   before_filter :can_build_jenkins_jobs, only:   [:build]
   before_filter :find_job,               except: [:index, :new, :create]
 
@@ -27,21 +25,12 @@ class JenkinsJobsController < ApplicationController
 
   def create
     @job = @project.jenkins_jobs.new(params[:jenkins_jobs])
-
-    respond_to do |format|
-      if @job.save
-        flash[:notice] = l(:notice_job_added)
-        BuildManager.new(@job).create_builds
-
-        format.html { redirect_to success_url }
-        format.js   { render :js => "window.location = #{success_url.to_json};" }
-      else
-        format.html {
-          flash[:error] = l(:notice_job_add_failed)
-          render action: 'new'
-        }
-        format.js { render 'form_error', layout: false }
-      end
+    if @job.save
+      flash[:notice] = l(:notice_job_added)
+      BuildManager.new(@job).create_builds
+      render_js_redirect
+    else
+      render_js_form_error
     end
   end
 
@@ -52,24 +41,13 @@ class JenkinsJobsController < ApplicationController
 
 
   def update
-    respond_to do |format|
-      if @job.update_attributes(params[:jenkins_jobs])
-        flash[:notice] = l(:notice_job_updated)
-
-        manager = BuildManager.new(@job)
-        if !manager.update_all_builds
-          flash[:error] = "#{l(:error_jenkins_connection)} : #{manager.errors.join(', ')}"
-        end
-
-        format.html { redirect_to success_url }
-        format.js   { render :js => "window.location = #{success_url.to_json};" }
-      else
-        format.html {
-          flash[:error] = l(:notice_job_update_failed)
-          render :action => "edit"
-        }
-        format.js { render "form_error", :layout => false }
-      end
+    if @job.update_attributes(params[:jenkins_jobs])
+      flash[:notice] = l(:notice_job_updated)
+      manager = BuildManager.new(@job)
+      flash[:error] = "#{l(:error_jenkins_connection)} : #{manager.errors.join(', ')}" if !manager.update_all_builds
+      render_js_redirect
+    else
+      render_js_form_error
     end
   end
 
@@ -96,12 +74,9 @@ class JenkinsJobsController < ApplicationController
 
 
   def refresh
+    @errors = ''
     manager = BuildManager.new(@job)
-    if !manager.update_last_build
-      @errors = "#{l(:error_jenkins_connection)} : #{manager.errors.join(', ')}"
-    else
-      @errors = ''
-    end
+    @errors = "#{l(:error_jenkins_connection)} : #{manager.errors.join(', ')}" if !manager.update_last_build
   end
 
 
@@ -120,11 +95,6 @@ class JenkinsJobsController < ApplicationController
     end
 
 
-    def check_xhr_request
-      @is_xhr ||= request.xhr?
-    end
-
-
     def success_url
       settings_project_path(@project, 'jenkins')
     end
@@ -133,6 +103,13 @@ class JenkinsJobsController < ApplicationController
     def render_js_redirect
       respond_to do |format|
         format.js { render js: "window.location = #{success_url.to_json};" }
+      end
+    end
+
+
+    def render_js_form_error
+      respond_to do |format|
+        format.js { render 'form_error', layout: false }
       end
     end
 

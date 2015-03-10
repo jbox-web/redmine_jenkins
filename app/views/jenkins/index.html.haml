@@ -1,0 +1,10 @@
+= render partial: 'common/jenkins_js_headers'
+
+.contextual= link_to l(:label_refresh_jobs), jenkins_refresh_path(@project), class: 'icon icon-reload', remote: true
+
+%h2= l(:label_jobs_list)
+
+#jobs-list= render partial: 'jenkins/jobs_list', locals: { jobs: @jobs }
+
+- content_for :sidebar do
+  = render partial: 'common/jenkins_sidebar'

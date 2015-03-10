@@ -1,0 +1,6 @@
+= render partial: 'common/jenkins_js_headers'
+
+%h2= l(:label_jobs_list)
+
+- content_for :sidebar do
+  = render partial: 'common/jenkins_sidebar'

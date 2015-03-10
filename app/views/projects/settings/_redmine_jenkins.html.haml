@@ -1,0 +1,54 @@
+= render partial: 'common/jenkins_js_headers'
+
+= error_messages_for 'jenkins_setting'
+
+= form_for @jenkins_setting, url:  jenkins_settings_save_path(@project),
+                             html: { method: :put } do |f|
+
+  %div{ class: 'box tabular' }
+    %p
+      %label= l(:label_jenkins_url)
+      = f.text_field :url, size: 50
+      %br
+      %em= l(:label_jenkins_url_desc)
+
+    %p
+      %label= l(:field_user)
+      = f.text_field :auth_user, size: 20
+
+    %p
+      %label= l(:field_password)
+      = f.password_field :auth_password, size: 20
+
+    %p
+      %label= l(:label_show_compact)
+      = bootstrapswitch_button do
+        = f.check_box :show_compact, {}, 'true'
+
+    %p
+      %label= l(:label_wait_for_build_id)
+      = bootstrapswitch_button do
+        = f.check_box :wait_for_build_id, {}, 'true'
+
+    %br
+    = submit_tag l(:button_save)
+    = link_to l(:label_test_connection), jenkins_settings_test_connection_path(@project), class: 'icon icon-test-connection modal-box-close-only'
+
+
+%fieldset{ class: 'box' }
+  %legend
+    = l(:label_jobs_list)
+    - if !@project.jenkins_setting.nil?
+      &nbsp;-&nbsp;
+      = link_to l(:label_add_jenkins_job), new_jenkins_job_path(@project), class: 'icon icon-add modal-box'
+
+  = render partial: 'projects/settings/jobs_list'
+
+:javascript
+  $(document).ready(function() {
+    $('.bootstrap-switch').each(function(index, element) {
+      installBootstrapSwitch(element);
+    });
+
+    initModalBoxes(modals);
+  });

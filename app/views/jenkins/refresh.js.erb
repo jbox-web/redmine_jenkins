@@ -1,5 +1,5 @@
-$('#jobs-list').html('<%= escape_javascript(render partial: "jenkins/jobs_list", locals: {jobs: @jobs}) %>');
-$('#jobs-list table tr').not(':first').effect("highlight", {color: '#D9EDF7'}, 1500);
+$('#jobs-list').html('<%= escape_javascript(render partial: "jenkins/jobs_list", locals: { jobs: @jobs }) %>');
+$('#jobs-list table tbody').effect("highlight", {color: '#D9EDF7'}, 1500);
 
 <% if !@errors.blank? %>
 $('#job-error').html('<%= escape_javascript(@errors) %>');

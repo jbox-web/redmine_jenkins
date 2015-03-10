@@ -7,7 +7,7 @@ class JenkinsSettingsController < ApplicationController
 
 
   def save
-    if !params[:jenkins_setting].nil?
+    unless params[:jenkins_setting].nil?
       if @jenkins_setting.update_attributes(params[:jenkins_setting])
         flash[:notice] = l(:notice_settings_updated)
       else

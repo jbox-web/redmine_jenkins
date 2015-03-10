@@ -1,0 +1,9 @@
+%p
+  %b= l(:label_jenkins_version) + ' : ' + @content[:version].to_s
+%p
+  %b= l(:label_jenkins_jobs_count) + ' : ' + @content[:jobs_count].to_s
+
+- if @content[:errors].any?
+  %pre
+    - @content[:errors].each do |error|
+      = error
