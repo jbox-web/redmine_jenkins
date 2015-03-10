@@ -3,6 +3,7 @@ ru:
   label_build_activity_plural: Jenkins
 
   ### SETTINGS
+  label_jenkins_url: Jenkins URL
   label_jenkins_url_desc: 'with http://, https:// ...'
   label_show_compact: Компактный прорстмотр
   label_wait_for_build_id: "Wait for build id"

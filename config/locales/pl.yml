@@ -3,6 +3,7 @@ pl:
   label_build_activity_plural: Jenkins
 
   ### SETTINGS
+  label_jenkins_url: Jenkins URL
   label_jenkins_url_desc: 'z http://, https:// ...'
   label_show_compact: Pokaż widok kompaktowy
   label_wait_for_build_id: "Oczekiwanie na ID testu"

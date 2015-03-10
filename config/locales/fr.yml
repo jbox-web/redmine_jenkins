@@ -3,6 +3,7 @@ fr:
   label_build_activity_plural: Jenkins
 
   ### SETTINGS
+  label_jenkins_url: URL Jenkins
   label_jenkins_url_desc: 'avec http://, https:// ...'
   label_show_compact: Montrer Vue Compacte
   label_wait_for_build_id: "Attendre l'ID de la construction"
@@ -25,7 +26,7 @@ fr:
 
   error_http_error: "HTTP Error %{code}"
   error_invalid_url: URL invalide
-  error_no_settings: "No settings for this project. Please <a href='%{url}'>confirm settings</a>"
+  error_no_settings: "Le plugin Jenkins n'est pas configuré. Veuillez le <a href='%{url}'>configurer d'abord</a>."
   error_jenkins_connection: Erreur lors de la connexion à Jenkins
 
   ### JOBS

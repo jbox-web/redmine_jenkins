@@ -3,6 +3,7 @@ de:
   label_build_activity_plural: Jenkins
 
   ### SETTINGS
+  label_jenkins_url: Jenkins URL
   label_jenkins_url_desc: 'inclusive http://, https:// ...'
   label_show_compact: Kompakte Anzeige
   label_wait_for_build_id: Warte auf Build Id
@@ -39,7 +40,7 @@ de:
   label_refresh_builds: Liste der Builds neu laden
   label_build_number: Auftragsnummer
   label_build_result: Resultat
-  label_finished_at: Fertig um 
+  label_finished_at: Fertig um
   label_see_console_output: Konsolenausgabe
   label_build_accepted: "%{job_name}, Auftrag %{build_id} gestartet"
   label_linked_repository: zugehöriges Archiv
