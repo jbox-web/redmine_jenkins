@@ -20,6 +20,16 @@ class JenkinsJob < ActiveRecord::Base
   delegate :jenkins_connection, :wait_for_build_id, :jenkins_url, to: :project
 
 
+  def to_s
+    name
+  end
+
+
+  def job_id
+    name.underscore.gsub(' ', '_')
+  end
+
+
   def url
     "#{jenkins_url}/job/#{name}"
   end
@@ -27,37 +37,6 @@ class JenkinsJob < ActiveRecord::Base
 
   def latest_build_url
     "#{url}/#{latest_build_number}"
-  end
-
-
-  def build
-    build_number = ""
-    opts = {}
-    opts['build_start_timeout'] = 30 if wait_for_build_id
-
-    begin
-      build_number = jenkins_connection.job.build(name, {}, opts)
-    rescue => e
-      error   = true
-      content = "#{l(:error_jenkins_connection)} : #{e.message}"
-    else
-      error = false
-    end
-
-    if !error
-      if wait_for_build_id
-        self.latest_build_number = build_number
-        content = l(:label_build_accepted, :job_name => self.name, :build_id => ": '#{build_number}'")
-      else
-        content = l(:label_build_accepted, :job_name => self.name, :build_id => '')
-      end
-
-      self.state = 'running'
-      self.save!
-      self.reload
-    end
-
-    return error, content
   end
 
 

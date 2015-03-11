@@ -3,11 +3,12 @@ class JenkinsController < ApplicationController
 
   # Redmine ApplicationController method
   before_filter :find_project_by_project_id
-  before_filter :find_jenkins_settings
   before_filter :can_view_jenkins_jobs
+  before_filter :find_jenkins_settings
 
   require 'will_paginate/array'
 
+  helper :redmine_ajax
   helper :jenkins
   helper :will_paginate
 
@@ -18,25 +19,19 @@ class JenkinsController < ApplicationController
 
 
   def refresh
-    errors = []
-
+    success = []
+    errors  = []
     @project.jenkins_jobs.each do |job|
-      manager = BuildManager.new(job)
-      if !manager.update_last_build
-        errors += manager.errors
+      result = BuildManager.update_last_build!(job)
+      if result.success?
+        success << result.message_on_success
+      else
+        errors << result.message_on_errors
       end
     end
-
-    errors = errors.uniq
-
-    if errors.any?
-      @errors = "#{l(:error_jenkins_connection)} : #{errors.join(', ')}"
-    else
-      @errors = ''
-    end
-
+    flash.now[:notice] = success.uniq.join('<br>').html_safe if !success.empty?
+    flash.now[:error]  = errors.uniq.join('<br>').html_safe if !errors.empty?
     @jobs = @project.jenkins_jobs
-
     render layout: false
   end
 

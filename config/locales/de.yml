@@ -66,3 +66,18 @@ de:
   ### QUERY
   field_jenkins_job: Aufgabe
   field_jenkins_build: Build
+
+  use_cases:
+    jenkins_job:
+      create_builds:
+        success: "Job '%{jenkins_job}' builds successfully created"
+        failed: "Errors while creating builds for job '%{jenkins_job}' : %{errors}"
+      trigger_build:
+        success: "Job '%{jenkins_job}' successfully started"
+        failed: "Errors while starting job '%{jenkins_job}' : %{errors}"
+      update_all_builds:
+        success: "Job '%{jenkins_job}' builds successfully updated"
+        failed: "Errors while updating job '%{jenkins_job}' builds : %{errors}"
+      update_last_build:
+        success: "Job '%{jenkins_job}' last build successfully updated"
+        failed: "Errors while updating job '%{jenkins_job}' last build : %{errors}"

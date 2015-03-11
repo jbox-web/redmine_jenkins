@@ -9,6 +9,7 @@ class JenkinsJobsController < ApplicationController
 
   layout Proc.new { |controller| controller.request.xhr? ? false : 'base' }
 
+  helper :redmine_ajax
   helper :jenkins
 
 
@@ -27,7 +28,8 @@ class JenkinsJobsController < ApplicationController
     @job = @project.jenkins_jobs.new(params[:jenkins_jobs])
     if @job.save
       flash[:notice] = l(:notice_job_added)
-      BuildManager.new(@job).create_builds
+      result = BuildManager.create_builds!(@job)
+      flash[:error] = result.message_on_errors if !result.success?
       render_js_redirect
     else
       render_js_form_error
@@ -43,8 +45,8 @@ class JenkinsJobsController < ApplicationController
   def update
     if @job.update_attributes(params[:jenkins_jobs])
       flash[:notice] = l(:notice_job_updated)
-      manager = BuildManager.new(@job)
-      flash[:error] = "#{l(:error_jenkins_connection)} : #{manager.errors.join(', ')}" if !manager.update_all_builds
+      result = BuildManager.update_all_builds!(@job)
+      flash[:error] = result.message_on_errors if !result.success?
       render_js_redirect
     else
       render_js_form_error
@@ -59,7 +61,12 @@ class JenkinsJobsController < ApplicationController
 
 
   def build
-    @error, @content = @job.build
+    result = BuildManager.trigger_build!(@job)
+    if result.success?
+      flash.now[:notice] = result.message_on_success
+    else
+      flash.now[:error] = result.message_on_errors
+    end
   end
 
 
@@ -74,9 +81,8 @@ class JenkinsJobsController < ApplicationController
 
 
   def refresh
-    @errors = ''
-    manager = BuildManager.new(@job)
-    @errors = "#{l(:error_jenkins_connection)} : #{manager.errors.join(', ')}" if !manager.update_last_build
+    result = BuildManager.update_last_build!(@job)
+    flash.now[:error] = result.message_on_errors if !result.success?
   end
 
 

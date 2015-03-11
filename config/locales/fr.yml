@@ -66,3 +66,18 @@ fr:
   ### QUERY
   field_jenkins_job: Job
   field_jenkins_build: Build
+
+  use_cases:
+    jenkins_job:
+      create_builds:
+        success: "Builds du job '%{jenkins_job}' créés avec succès"
+        failed: "Erreurs lors de la création des builds du job '%{jenkins_job}' : %{errors}"
+      trigger_build:
+        success: "Job '%{jenkins_job}' lancé avec succès"
+        failed: "Erreurs lors du déclenchement du job '%{jenkins_job}' : %{errors}"
+      update_all_builds:
+        success: "Mise à jour des builds du job '%{jenkins_job}' réalisée avec succès"
+        failed: "Erreurs lors la mise à jour des builds du job '%{jenkins_job}' : %{errors}"
+      update_last_build:
+        success: "Mise à jour du job '%{jenkins_job}' réalisée avec succès"
+        failed: "Erreurs lors la mise à jour du job '%{jenkins_job}' : %{errors}"

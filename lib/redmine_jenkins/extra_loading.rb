@@ -7,7 +7,8 @@ module RedmineJenkins
     # Load Forms and Concerns objects
     [
       Rails.root.join('plugins', 'redmine_jenkins', 'app', 'presenters'),
-      Rails.root.join('plugins', 'redmine_jenkins', 'app', 'services')
+      Rails.root.join('plugins', 'redmine_jenkins', 'app', 'services'),
+      Rails.root.join('plugins', 'redmine_jenkins', 'app', 'use_cases')
     ].each do |dir|
       if Dir.exists?(dir)
         ActiveSupport::Dependencies.autoload_paths += [dir]
