@@ -41,12 +41,13 @@ class JenkinsJob < ActiveRecord::Base
 
 
   def console
-    begin
-      console_output = jenkins_connection.job.get_console_output(name, latest_build_number)['output'].gsub('\r\n', '<br />')
-    rescue => e
-      console_output = e.message
-    end
-    return console_output
+    console_output =
+      begin
+        jenkins_connection.job.get_console_output(name, latest_build_number)['output'].gsub('\r\n', '<br />')
+      rescue => e
+        e.message
+      end
+    console_output
   end
 
 end
