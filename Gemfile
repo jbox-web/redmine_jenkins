@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'jenkins_api_client', '~> 1.0.1'
+gem 'jenkins_api_client', '~> 1.3.0'
 gem 'will_paginate'
 
 # HAML views
