@@ -20,7 +20,7 @@
           %tr
             %td= job.name
             %td= render_repo_name(job)
-            %td= JenkinsBuild.redmine_count_of(job.name)
+            %td= job.builds.size
             %td= @jenkins_setting.number_of_builds_for(job.name)
             %td= job.builds_to_keep
             %td

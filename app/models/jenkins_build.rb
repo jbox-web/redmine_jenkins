@@ -34,13 +34,6 @@ class JenkinsBuild < ActiveRecord::Base
 
   class << self
 
-    def redmine_count_of(job_name)
-      job = JenkinsJob.find_by_name(job_name)
-      return 0 if job.nil?
-      return JenkinsBuild.find_all_by_jenkins_job_id(job.id).count
-    end
-
-
     def find_by_changeset(changeset)
       retval = JenkinsBuild.find(:all,
                                 :order      => "#{JenkinsBuild.table_name}.number",
