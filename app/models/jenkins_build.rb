@@ -61,13 +61,9 @@ class JenkinsBuild < ActiveRecord::Base
 
 
   def event_desc
-    desc = ""
-
-    if jenkins_job.health_report.any?
-      desc << jenkins_job.health_report.map{|health_report| health_report['description']}.join("\n")
-    end
-
-    return desc
+    desc = ''
+    desc << jenkins_job.health_report.map{ |hr| hr['description'] }.join("\n") if jenkins_job.health_report.any?
+    desc
   end
 
 end
