@@ -6,6 +6,7 @@ module RedmineJenkins
 
     # Load Forms and Concerns objects
     [
+      Rails.root.join('plugins', 'redmine_jenkins', 'app', 'presenters'),
       Rails.root.join('plugins', 'redmine_jenkins', 'app', 'services')
     ].each do |dir|
       if Dir.exists?(dir)

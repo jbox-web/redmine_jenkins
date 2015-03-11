@@ -5,6 +5,14 @@ module JenkinsHelper
   end
 
 
+  def present(object, klass = nil, *args)
+    klass ||= "#{object.class.base_class}Presenter".constantize
+    presenter = klass.new(object, self, *args)
+    yield presenter if block_given?
+    presenter
+  end
+
+
   def state_to_css_class(state)
     label_class = ''
     case state.downcase

@@ -19,7 +19,15 @@
 
     %tbody
       - jobs.each do |job|
-        = render partial: 'jenkins_jobs/job_solo', locals: { job: job }
+        - present job do |p|
+          %tr{ id: p.job_id }
+            %td= p.job_info
+            %td= p.latest_build_infos
+            %td= p.job_state
+            %td= p.latest_build_duration
+            %td= p.latest_changesets
+            %td= p.job_history
+            %td= p.job_actions
 
   :javascript
     $(document).ready(function() {
