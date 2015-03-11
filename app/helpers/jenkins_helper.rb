@@ -31,6 +31,16 @@ module JenkinsHelper
   end
 
 
+  def weather_icon(icon)
+    image_tag(plugin_asset_link('redmine_jenkins', icon), alt: icon, style: 'display: inline-block; margin-top: 5px;')
+  end
+
+
+  def fa_icon(icon)
+    content_tag(:i, '', class: "fa fa-lg #{icon}")
+  end
+
+
   def state_to_label(state)
     state.gsub('_', ' ').capitalize
   end

@@ -81,7 +81,7 @@ class JenkinsJobPresenter < SimpleDelegator
     def render_report_list
       s = ''
       jenkins_job.health_report.each do |health_report|
-        s << content_tag(:li, "#{health_report['description']} #{weather_icon(health_report)}".html_safe)
+        s << content_tag(:li, "#{health_report['description']} #{weather_icon(health_report['iconUrl'])}".html_safe)
       end
       s.html_safe
     end
@@ -110,16 +110,6 @@ class JenkinsJobPresenter < SimpleDelegator
 
     def link_to_history
       link_to fa_icon('fa-history'), history_jenkins_job_path(jenkins_job.project, jenkins_job), title: l(:label_see_history), class: 'modal-box-close-only'
-    end
-
-
-    def fa_icon(icon)
-      content_tag(:i, '', class: "fa fa-lg #{icon}")
-    end
-
-
-    def weather_icon(health_report)
-      image_tag(plugin_asset_link('redmine_jenkins', health_report['iconUrl']), alt: health_report['iconUrl'], style: 'display: inline-block; margin-top: 5px;')
     end
 
 
