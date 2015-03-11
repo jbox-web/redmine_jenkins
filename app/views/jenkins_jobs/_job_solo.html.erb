@@ -1,7 +1,7 @@
 <tr id="<%= job.name.downcase.gsub(' ', '_') %>">
   <td>
     <h3><%= link_to job.name, job.url, :target => 'about_blank' %></h3>
-    <% if !job.jenkins_setting.show_compact %>
+    <% if !job.project.jenkins_setting.show_compact %>
       <%= job.description %>
       <% if job.health_report.any? %>
         <ul>

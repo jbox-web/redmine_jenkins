@@ -1,13 +1,15 @@
 class JenkinsJobsController < ApplicationController
   unloadable
 
-  before_filter :find_project
+  # Redmine ApplicationController method
+  before_filter :find_project_by_project_id
+
   before_filter :check_xhr_request
 
-  before_filter :can_build_jenkins_jobs, :only => [:build]
-  before_filter :find_job,               :except => [:index, :new, :create]
+  before_filter :can_build_jenkins_jobs, only:   [:build]
+  before_filter :find_job,               except: [:index, :new, :create]
 
-  layout Proc.new { |controller| controller.request.xhr? ? 'popup' : 'base' }
+  layout Proc.new { |controller| controller.request.xhr? ? false : 'base' }
 
   helper :jenkins
 
@@ -18,15 +20,13 @@ class JenkinsJobsController < ApplicationController
 
 
   def new
-    @job = JenkinsJob.new()
-    @jobs = @jenkins_setting.get_jobs_list - @jenkins_setting.jobs.map(&:name)
+    @job  = @project.jenkins_jobs.new
+    @jobs = @project.jenkins_setting.get_jobs_list - @project.jenkins_jobs.map(&:name)
   end
 
 
   def create
-    @job = JenkinsJob.new(params[:jenkins_jobs])
-    @job.project = @project
-    @job.jenkins_setting = @jenkins_setting
+    @job = @project.jenkins_jobs.new(params[:jenkins_jobs])
 
     respond_to do |format|
       if @job.save
@@ -38,16 +38,16 @@ class JenkinsJobsController < ApplicationController
       else
         format.html {
           flash[:error] = l(:notice_job_add_failed)
-          render :action => "create"
+          render action: 'new'
         }
-        format.js { render "form_error", :layout => false }
+        format.js { render 'form_error', layout: false }
       end
     end
   end
 
 
   def edit
-    @jobs = @jenkins_setting.get_jobs_list
+    @jobs = @project.jenkins_setting.get_jobs_list
   end
 
 
@@ -75,14 +75,8 @@ class JenkinsJobsController < ApplicationController
 
 
   def destroy
-    respond_to do |format|
-      if @job.destroy
-        flash[:notice] = l(:notice_job_deleted)
-        format.js { render :js => "window.location = #{success_url.to_json};" }
-      else
-        format.js { render :layout => false }
-      end
-    end
+    flash[:notice] = l(:notice_job_deleted) if @job.destroy
+    render_js_redirect
   end
 
 
@@ -92,7 +86,7 @@ class JenkinsJobsController < ApplicationController
 
 
   def history
-    @builds = @job.builds.paginate(:page => params[:page], :per_page => 5)
+    @builds = @job.builds.paginate(page: params[:page], per_page: 5)
   end
 
 
@@ -114,36 +108,32 @@ class JenkinsJobsController < ApplicationController
   private
 
 
-  def can_build_jenkins_jobs
-    render_403 unless view_context.user_allowed_to(:build_jenkins_jobs, @project)
-  end
-
-
-  def find_job
-    @job = JenkinsJob.find_by_id(params[:id])
-    if @job.nil?
-      render_404
+    def can_build_jenkins_jobs
+      render_403 unless User.current.allowed_to?(:build_jenkins_jobs, @project)
     end
-  end
 
 
-  def find_project
-    @project = Project.find(params[:project_id])
-    if @project.nil?
+    def find_job
+      @job = @project.jenkins_jobs.find(params[:id])
+    rescue ActiveRecord::RecordNotFound => e
       render_404
     end
 
-    @jenkins_setting = @project.jenkins_setting
-  end
+
+    def check_xhr_request
+      @is_xhr ||= request.xhr?
+    end
 
 
-  def check_xhr_request
-    @is_xhr ||= request.xhr?
-  end
+    def success_url
+      settings_project_path(@project, 'jenkins')
+    end
 
 
-  def success_url
-    url_for(:controller => 'projects', :action => 'settings', :id => @project, :tab => 'jenkins')
-  end
+    def render_js_redirect
+      respond_to do |format|
+        format.js { render js: "window.location = #{success_url.to_json};" }
+      end
+    end
 
 end

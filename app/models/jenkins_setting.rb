@@ -3,11 +3,10 @@ class JenkinsSetting < ActiveRecord::Base
 
   ## Relations
   belongs_to :project
-  has_many   :jobs, class_name: 'JenkinsJob', dependent: :destroy
 
   ## Validations
-  validates :project_id,  presence: true, uniqueness: true
-  validates :url,         presence: true
+  validates :project_id, presence: true, uniqueness: true
+  validates :url,        presence: true
 
 
   def jenkins_connection

@@ -4,7 +4,6 @@ class JenkinsJob < ActiveRecord::Base
   ## Relations
   belongs_to :project
   belongs_to :repository
-  belongs_to :jenkins_setting
   has_many   :builds, class_name: 'JenkinsBuild', dependent: :destroy
 
   attr_accessible :name, :repository_id, :builds_to_keep
@@ -12,18 +11,17 @@ class JenkinsJob < ActiveRecord::Base
   ## Validations
   validates :project_id,         presence: true
   validates :repository_id,      presence: true
-  validates :jenkins_setting_id, presence: true
-  validates :name,               presence: true, uniqueness: { scope: :jenkins_setting_id }
+  validates :name,               presence: true, uniqueness: { scope: :project_id }
 
   ## Serializations
   serialize :health_report, Array
 
   ## Delegators
-  delegate :jenkins_connection, :wait_for_build_id, to: :jenkins_setting
+  delegate :jenkins_connection, :wait_for_build_id, :jenkins_url, to: :project
 
 
   def url
-    "#{jenkins_setting.url}/job/#{name}"
+    "#{jenkins_url}/job/#{name}"
   end
 
 

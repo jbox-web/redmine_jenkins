@@ -1,11 +1,10 @@
 class JenkinsController < ApplicationController
   unloadable
 
-  before_filter :find_project
+  # Redmine ApplicationController method
+  before_filter :find_project_by_project_id
+  before_filter :find_jenkins_settings
   before_filter :can_view_jenkins_jobs
-  before_filter :find_jobs, :only => [:index]
-
-  layout Proc.new { |controller| controller.request.xhr? ? 'popup' : 'base' }
 
   require 'will_paginate/array'
 
@@ -14,13 +13,14 @@ class JenkinsController < ApplicationController
 
 
   def index
+    @jobs = @project.jenkins_jobs
   end
 
 
   def refresh
     errors = []
 
-    @jenkins_setting.jobs.each do |job|
+    @project.jenkins_jobs.each do |job|
       manager = BuildManager.new(job)
       if !manager.update_last_build
         errors += manager.errors
@@ -34,34 +34,25 @@ class JenkinsController < ApplicationController
     else
       @errors = ''
     end
-    find_jobs
+
+    @jobs = @project.jenkins_jobs
+
+    render layout: false
   end
 
 
   private
 
 
-  def find_project
-    @project = Project.find(params[:project_id])
-    if @project.nil?
-      render_404
+    def find_jenkins_settings
+      if @project.jenkins_setting.nil?
+        render action: 'jenkins_instructions'
+      end
     end
 
-    if @project.jenkins_setting.nil?
-      render :action => 'jenkins_instructions'
-    else
-      @jenkins_setting = @project.jenkins_setting
+
+    def can_view_jenkins_jobs
+      render_403 unless User.current.allowed_to?(:view_jenkins_jobs, @project)
     end
-  end
-
-
-  def can_view_jenkins_jobs
-    render_403 unless view_context.user_allowed_to(:view_jenkins_jobs, @project)
-  end
-
-
-  def find_jobs
-    @jobs = JenkinsJob.where(:project_id => @project.id)
-  end
 
 end
