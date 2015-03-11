@@ -16,6 +16,8 @@ class JenkinsClient
 
   def connection
     JenkinsApi::Client.new(@options)
+  rescue ArgumentError => e
+    raise RedmineJenkins::Error::JenkinsConnectionError, e
   end
 
 
