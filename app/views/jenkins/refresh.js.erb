@@ -1,8 +1,3 @@
-$('#jobs-list').html('<%= escape_javascript(render partial: "jenkins/jobs_list", locals: { jobs: @jobs }) %>');
+<%= js_render_partial('#jobs-list', 'jenkins/jobs_list', locals: { jobs: @jobs }) %>
+<%= render_flash_messages_as_js('.flash-messages') %>
 $('#jobs-list table tbody').effect("highlight", {color: '#D9EDF7'}, 1500);
-
-<% if !@errors.blank? %>
-$('#job-error').html('<%= escape_javascript(@errors) %>');
-$('#job-error').show();
-$('#job-info').hide();
-<% end %>

@@ -1,9 +1,4 @@
-$('#<%= @job.name.downcase.gsub(" ", "_") %>').replaceWith('<%= escape_javascript(render :partial => "job_solo", :locals => {:job => @job}) %>');
-$('#<%= @job.name.downcase.gsub(" ", "_") %>').effect("highlight", {color: '#D9EDF7'}, 1500);
+<%= js_render_partial("##{@job.job_id}", 'jenkins_jobs/job_solo', method: :replace, locals: { job: @job }) %>
+$('#<%= @job.job_id %>').effect("highlight", {color: '#D9EDF7'}, 1500);
+<%= render_flash_messages_as_js('.flash-messages') %>
 initModalBoxes(modals);
-
-<% if !@errors.blank? %>
-$('#job-error').html('<%= escape_javascript(@errors) %>');
-$('#job-error').show();
-$('#job-info').hide();
-<% end %>

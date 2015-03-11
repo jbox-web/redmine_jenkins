@@ -1,1 +1,1 @@
-$('#job_builds_history').html('<%= escape_javascript(render partial: "history", locals: {builds: @builds}) %>');
+<%= js_render_partial('#job_builds_history', 'jenkins_jobs/history', locals: { builds: @builds }) %>
