@@ -123,10 +123,17 @@ module JenkinsJobs
 
 
       def clean_up_builds
-        if jenkins_job.builds.size > jenkins_job.builds_to_keep
-          to_delete = jenkins_job.builds.size - jenkins_job.builds_to_keep
-          jenkins_job.builds.last(to_delete).map(&:destroy)
-        end
+        jenkins_job.builds.last(number_of_builds_to_delete).map(&:destroy) if too_much_builds?
+      end
+
+
+      def too_much_builds?
+        jenkins_job.builds.size > jenkins_job.builds_to_keep
+      end
+
+
+      def number_of_builds_to_delete
+        jenkins_job.builds.size - jenkins_job.builds_to_keep
       end
 
 
