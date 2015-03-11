@@ -9,7 +9,7 @@ class JenkinsJobPresenter < SimpleDelegator
 
 
   def job_id
-    jenkins_job.name.downcase.gsub(' ', '_')
+    jenkins_job.job_id
   end
 
 
