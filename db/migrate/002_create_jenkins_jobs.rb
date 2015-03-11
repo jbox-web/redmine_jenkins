@@ -1,24 +1,24 @@
 class CreateJenkinsJobs < ActiveRecord::Migration
 
-  def self.up
+  def up
     create_table :jenkins_jobs do |t|
-      t.column :project_id,            :integer
-      t.column :repository_id,         :integer
-      t.column :jenkins_setting_id,    :integer
-      t.column :name,                  :string
-      t.column :latest_build_number,   :integer
-      t.column :latest_build_date,     :datetime
-      t.column :latest_build_duration, :integer
-      t.column :state,                 :string
-      t.column :health_report,         :text
-      t.column :builds_to_keep,        :integer, default: 10
-      t.column :description,           :text
-      t.column :created_at,            :datetime
-      t.column :updated_at,            :datetime
+      t.integer  :project_id
+      t.integer  :repository_id
+      t.integer  :jenkins_setting_id
+      t.string   :name
+      t.integer  :latest_build_number
+      t.datetime :latest_build_date
+      t.integer  :latest_build_duration
+      t.string   :state
+      t.text     :health_report
+      t.integer  :builds_to_keep, default: 10
+      t.text     :description
+      t.datetime :created_at
+      t.datetime :updated_at
     end
   end
 
-  def self.down
+  def down
     drop_table :jenkins_jobs
   end
 

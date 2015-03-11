@@ -1,15 +1,15 @@
 class CreateJenkinsTestResults < ActiveRecord::Migration
 
-  def self.up
+  def up
     create_table :jenkins_test_results do |t|
-      t.column :jenkins_build_id, :integer
-      t.column :fail_count,       :integer
-      t.column :skip_count,       :integer
-      t.column :total_count,      :integer
+      t.integer :jenkins_build_id
+      t.integer :fail_count
+      t.integer :skip_count
+      t.integer :total_count
     end
   end
 
-  def self.down
+  def down
     drop_table :jenkins_test_results
   end
 

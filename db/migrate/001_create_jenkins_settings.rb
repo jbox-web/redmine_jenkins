@@ -1,18 +1,18 @@
 class CreateJenkinsSettings < ActiveRecord::Migration
 
-  def self.up
+  def up
     create_table :jenkins_settings do |t|
-      t.column :project_id,        :integer
-      t.column :url,               :string
-      t.column :auth_user,         :string,  default: ''
-      t.column :auth_password,     :string,  default: ''
-      t.column :show_compact,      :boolean, default: false
-      t.column :get_build_details, :boolean, default: true
-      t.column :wait_for_build_id, :boolean, default: false
+      t.integer :project_id
+      t.string  :url
+      t.string  :auth_user,         default: ''
+      t.string  :auth_password,     default: ''
+      t.boolean :show_compact,      default: false
+      t.boolean :get_build_details, default: true
+      t.boolean :wait_for_build_id, default: false
     end
   end
 
-  def self.down
+  def down
     drop_table :jenkins_settings
   end
 
