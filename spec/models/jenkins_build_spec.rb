@@ -2,15 +2,13 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe JenkinsBuild do
 
-  before(:each) do
-    project         = create(:project)
-    repository      = create(:repository_git, project: project)
-    jenkins_setting = create(:jenkins_setting, project: project)
-    jenkins_job     = create(:jenkins_job, project: project, repository: repository, jenkins_setting: jenkins_setting)
-    @jenkins_build  = build(:jenkins_build, jenkins_job: jenkins_job)
-  end
+  let(:project){ create(:project) }
+  let(:repository){ create(:repository_git, project: project) }
+  let(:jenkins_setting){ create(:jenkins_setting, project: project) }
+  let(:jenkins_job){ create(:jenkins_job, project: project, repository: repository) }
+  let(:jenkins_build){ build(:jenkins_build, jenkins_job: jenkins_job) }
 
-  subject { @jenkins_build }
+  subject { jenkins_build }
 
   it { should be_valid }
 
