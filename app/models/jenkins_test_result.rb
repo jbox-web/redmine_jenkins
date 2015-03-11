@@ -6,7 +6,7 @@ class JenkinsTestResult < ActiveRecord::Base
 
 
   def description_for_activity
-    return "TestResults: #{fail_count}Failed #{skip_count}Skipped Total-#{total_count}"
+    "TestResults: #{fail_count}Failed #{skip_count}Skipped Total-#{total_count}"
   end
 
 end
