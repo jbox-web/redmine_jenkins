@@ -11,7 +11,7 @@ module RedmineJenkins
         return '' unless action_name
 
         if (controller.class.name == 'ActivitiesController' and action_name == 'index')
-          return stylesheet_link_tag(:application, :plugin => 'redmine_jenkins')
+          return stylesheet_link_tag(:application, plugin: 'redmine_jenkins')
         end
       end
 
