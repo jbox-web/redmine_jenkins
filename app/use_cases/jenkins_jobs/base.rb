@@ -123,7 +123,7 @@ module JenkinsJobs
 
 
       def clean_up_builds
-        jenkins_job.builds.last(number_of_builds_to_delete).map(&:destroy) if too_much_builds?
+        jenkins_job.builds.first(number_of_builds_to_delete).map(&:destroy) if too_much_builds?
       end
 
 
