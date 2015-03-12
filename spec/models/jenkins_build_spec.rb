@@ -15,7 +15,7 @@ describe JenkinsBuild do
   ## Test relations
   it { should belong_to(:jenkins_job) }
   it { should belong_to(:author).class_name('User').with_foreign_key('author_id') }
-  it { should have_many(:changesets).class_name('JenkinsBuildChangeset').dependent(:destroy) }
+  it { should have_and_belong_to_many(:changesets) }
 
   ## Test validation
   it { should validate_presence_of(:jenkins_job_id) }
