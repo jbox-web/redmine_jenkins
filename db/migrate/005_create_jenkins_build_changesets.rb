@@ -5,7 +5,7 @@ class CreateJenkinsBuildChangesets < ActiveRecord::Migration
       t.integer :jenkins_build_id
       t.integer :repository_id
       t.string  :revision
-      t.text    :comment, limit: 4294967295
+      t.text    :comment, limit: 16.megabytes - 1
     end
   end
 
