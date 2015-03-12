@@ -43,9 +43,7 @@ class JenkinsJobPresenter < SimpleDelegator
   def latest_changesets
     changesets = jenkins_job.builds.last.changesets rescue []
     return '' if changesets.empty?
-    content_tag(:ul) do
-      render_changesets_list(changesets)
-    end
+    content_tag(:ul, render_changesets_list(changesets))
   end
 
 
@@ -114,17 +112,19 @@ class JenkinsJobPresenter < SimpleDelegator
 
 
     def render_changesets_list(changesets)
+      s = ''
       changesets.each do |changeset|
-        content_tag(:li, content_for_changeset(changeset))
+        s << content_tag(:li, content_for_changeset(changeset).html_safe)
       end
+      s.html_safe
     end
 
 
     def content_for_changeset(changeset)
-      content = ''
-      content << changeset.comment
-      content << link_to("##{changeset.revision[0..10]}", changeset_url(changeset)) unless jenkins_job.repository.nil?
-      content
+      s = ''
+      s << changeset.comments
+      s << link_to("##{changeset.revision[0..10]}", changeset_url(changeset)) unless jenkins_job.repository.nil?
+      s
     end
 
 
