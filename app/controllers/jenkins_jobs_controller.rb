@@ -71,7 +71,7 @@ class JenkinsJobsController < ApplicationController
 
 
   def history
-    @builds = @job.builds.paginate(page: params[:page], per_page: 5)
+    @builds = @job.builds.ordered.paginate(page: params[:page], per_page: 5)
   end
 
 
