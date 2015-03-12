@@ -72,7 +72,7 @@ module JenkinsJobs
 
 
       def do_create_builds(builds, update = false)
-        builds.each do |build_data|
+        builds.reverse.each do |build_data|
           ## Find Build in Redmine
           jenkins_build = jenkins_job.builds.find_by_number(build_data['number'])
 
