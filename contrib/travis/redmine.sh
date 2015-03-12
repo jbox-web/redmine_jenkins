@@ -29,8 +29,10 @@ function install_redmine() {
   echo ""
 
   echo "#### MOVE PLUGIN"
+  # Move GITHUB_USER/GITHUB_PROJECT to redmine/plugins dir
   mv "${PLUGIN_PATH}" "${REDMINE_NAME}/plugins"
-  rmdir "${PLUGIN_PATH}"
+  # Remove parent dir (GITHUB_USER)
+  rmdir $(dirname ${PLUGIN_PATH})
   echo "Done !"
   echo ""
 
@@ -62,13 +64,17 @@ function install_rspec() {
   echo ""
 
   if [ "$major" == "3" ] ; then
-    echo "#### RAILS 4 : INSTALL GEMFILE"
-    cp "redmine/plugins/${PLUGIN_NAME}/gemfiles/rails4.gemfile" "redmine/plugins/${PLUGIN_NAME}/Gemfile"
-    echo "Done !"
+    if [ -f "redmine/plugins/${PLUGIN_NAME}/gemfiles/rails4.gemfile" ] ; then
+      echo "#### RAILS 4 : INSTALL GEMFILE"
+      cp "redmine/plugins/${PLUGIN_NAME}/gemfiles/rails4.gemfile" "redmine/plugins/${PLUGIN_NAME}/Gemfile"
+      echo "Done !"
+    fi
   else
-    echo "#### RAILS 3 : INSTALL GEMFILE"
-    cp "redmine/plugins/${PLUGIN_NAME}/gemfiles/rails3.gemfile" "redmine/plugins/${PLUGIN_NAME}/Gemfile"
-    echo "Done !"
+    if [ -f "redmine/plugins/${PLUGIN_NAME}/gemfiles/rails3.gemfile" ] ; then
+      echo "#### RAILS 3 : INSTALL GEMFILE"
+      cp "redmine/plugins/${PLUGIN_NAME}/gemfiles/rails3.gemfile" "redmine/plugins/${PLUGIN_NAME}/Gemfile"
+      echo "Done !"
+    fi
 
     echo "#### RAILS 3 : UPDATE REDMINE GEMFILE"
     echo "Update shoulda to 3.5.0"
