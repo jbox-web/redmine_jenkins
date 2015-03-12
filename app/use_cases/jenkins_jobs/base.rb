@@ -89,7 +89,7 @@ module JenkinsJobs
 
       def create_build(build_number)
         ## Get BuildDetails from Jenkins
-        build_details     = get_jenkins_build_details(build_number)
+        build_details = get_jenkins_build_details(build_number)
 
         ## Create a new AR object to store data
         build = jenkins_job.builds.new
@@ -108,7 +108,7 @@ module JenkinsJobs
 
       def update_build(build, build_number)
         ## Get BuildDetails from Jenkins
-        build_details     = get_jenkins_build_details(build_number)
+        build_details = get_jenkins_build_details(build_number)
 
         ## Update the AR object with new data
         build.result      = build_details['result'].nil? ? 'running' : build_details['result']
