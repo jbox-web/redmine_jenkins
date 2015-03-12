@@ -3,3 +3,10 @@
 .icon-running { background-image: url("../images/running.gif"); margin-left: 4px; }
 .icon-test-connection { background-image: url("../images/test_connection.png"); margin-left: 4px; }
 dt.build_activity  { background-image: url("../images/changeset.png"); }
+pre.jenkins-output {
+  white-space: pre-wrap;       /* CSS 3 */
+  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;      /* Opera 4-6 */
+  white-space: -o-pre-wrap;    /* Opera 7 */
+  word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
