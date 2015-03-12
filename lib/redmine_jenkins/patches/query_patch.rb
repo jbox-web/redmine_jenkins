@@ -153,14 +153,11 @@ module RedmineJenkins
           return @jenkins_filters unless project
           return @jenkins_filters unless @available_filters
 
-          jenkins_settings = JenkinsSetting.find_by_project_id(project.id)
-          return @jenkins_filters unless jenkins_settings
-
           @jenkins_filters << JenkinsQueryFilter.new(
                                 "jenkins_job",
                                 {:type   => :list_optional,
                                  :order  => @available_filters.size + 1,
-                                 :values => jenkins_settings.jobs.collect {|job| [job.name, job.id.to_s]}
+                                 :values => project.jenkins_jobs.collect {|job| [job.name, job.id.to_s]}
                                 },
                                 JenkinsJob.table_name,
                                 "id")
