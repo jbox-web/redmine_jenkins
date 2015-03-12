@@ -4,7 +4,7 @@ class JenkinsBuild < ActiveRecord::Base
   ## Relations
   belongs_to :jenkins_job
   belongs_to :author,     class_name: 'User', foreign_key: 'author_id'
-  has_many   :changesets, class_name: 'JenkinsBuildChangeset', dependent: :destroy
+  has_and_belongs_to_many :changesets
 
   ## Validations
   validates :jenkins_job_id,  presence: true

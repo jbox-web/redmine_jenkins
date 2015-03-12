@@ -139,8 +139,9 @@ module JenkinsJobs
 
       def create_changeset(build, changesets)
         changesets.each do |changeset|
-          build_changeset = build.changesets.find_by_revision(changeset['commitId'])
-          build.changesets.create(repository_id: jenkins_job.repository_id, revision: changeset['commitId'], comment: changeset['comment']) if build_changeset.nil?
+          build_changeset = jenkins_job.repository.changesets.find_by_revision(changeset['commitId'])
+          next if build_changeset.nil?
+          build.changesets << build_changeset unless build.changesets.include?(build_changeset)
         end
       end
 
