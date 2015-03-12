@@ -22,12 +22,12 @@
 
     %p
       %label= l(:label_show_compact)
-      = bootstrapswitch_button do
+      = bootstrap_switch_tag do
         = f.check_box :show_compact, {}, 'true'
 
     %p
       %label= l(:label_wait_for_build_id)
-      = bootstrapswitch_button do
+      = bootstrap_switch_tag do
         = f.check_box :wait_for_build_id, {}, 'true'
 
     %br
