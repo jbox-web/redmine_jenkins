@@ -17,6 +17,7 @@ echo "GITHUB_SOURCE   : ${GITHUB_SOURCE}"
 echo "PLUGIN_PATH     : ${PLUGIN_PATH}"
 echo ""
 
+install_packages
 install_redmine
 install_rspec
 install_plugin
