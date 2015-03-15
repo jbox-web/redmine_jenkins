@@ -9,7 +9,7 @@ class JenkinsJobsController < ApplicationController
 
   layout Proc.new { |controller| controller.request.xhr? ? false : 'base' }
 
-  helper :redmine_ajax
+  helper :redmine_bootstrap_kit
   helper :jenkins
 
 

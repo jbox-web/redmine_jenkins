@@ -8,7 +8,7 @@ class JenkinsController < ApplicationController
 
   require 'will_paginate/array'
 
-  helper :redmine_ajax
+  helper :redmine_bootstrap_kit
   helper :jenkins
   helper :will_paginate
 
