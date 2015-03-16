@@ -28,11 +28,6 @@ module JenkinsHelper
   end
 
 
-  def paginate(collection, params= {})
-    will_paginate collection, params.merge(:renderer => WillPaginateHelper::LinkRenderer)
-  end
-
-
   def plugin_asset_link(plugin_name, asset_name)
     File.join(Redmine::Utils.relative_url_root, 'plugin_assets', plugin_name, 'images', asset_name)
   end

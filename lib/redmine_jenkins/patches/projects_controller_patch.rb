@@ -10,7 +10,7 @@ module RedmineJenkins
           unloadable
 
           helper :jenkins
-          helper :bootstrap_switch
+          helper :redmine_bootstrap_kit
 
           alias_method_chain :settings, :redmine_jenkins
         end

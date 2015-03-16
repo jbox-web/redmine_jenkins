@@ -10,7 +10,6 @@ class JenkinsController < ApplicationController
 
   helper :redmine_bootstrap_kit
   helper :jenkins
-  helper :will_paginate
 
 
   def index
