@@ -6,20 +6,20 @@ module JenkinsHelper
 
 
   def state_to_css_class(state)
-    label_class = ''
     case state.downcase
-      when 'success'
-        label_class = 'success'
-      when 'failure', 'aborted'
-        label_class = 'important'
-      when 'unstable', 'invalid'
-        label_class = 'warning'
-      when 'running'
-        label_class = 'info'
-      when 'not_run'
-        label_class = ''
+    when 'success'
+      'success'
+    when 'failure', 'aborted'
+      'important'
+    when 'unstable', 'invalid'
+      'warning'
+    when 'running'
+      'info'
+    when 'not_run'
+      ''
+    else
+      ''
     end
-    return label_class
   end
 
 
