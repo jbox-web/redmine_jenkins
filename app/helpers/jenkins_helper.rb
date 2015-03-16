@@ -5,14 +5,6 @@ module JenkinsHelper
   end
 
 
-  def present(object, klass = nil, *args)
-    klass ||= "#{object.class.base_class}Presenter".constantize
-    presenter = klass.new(object, self, *args)
-    yield presenter if block_given?
-    presenter
-  end
-
-
   def state_to_css_class(state)
     label_class = ''
     case state.downcase
@@ -33,11 +25,6 @@ module JenkinsHelper
 
   def weather_icon(icon)
     image_tag(plugin_asset_link('redmine_jenkins', icon), alt: icon, style: 'display: inline-block; margin-top: 5px;')
-  end
-
-
-  def fa_icon(icon)
-    content_tag(:i, '', class: "fa fa-lg #{icon}")
   end
 
 
