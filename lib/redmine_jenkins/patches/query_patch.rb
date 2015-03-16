@@ -116,7 +116,7 @@ module RedmineJenkins
             builds = find_jenkins_builds(job)
             next if builds.length == 0
             cond_builds = builds.collect{|build| "#{ActiveRecord::Base.connection.quote(build.id.to_s)}"}.join(",")
-            retval += JenkinsBuildChangeset.find(:all, :conditions => ["#{JenkinsBuildChangeset.table_name}.jenkins_build_id in (#{cond_builds})"], :order => "#{JenkinsBuildChangeset.table_name}.id DESC", :limit => 100)
+            retval += ChangesetsJenkinsBuild.find(:all, :conditions => ["#{ChangesetsJenkinsBuild.table_name}.jenkins_build_id in (#{cond_builds})"], :order => "#{ChangesetsJenkinsBuild.table_name}.id DESC", :limit => 100)
           end
 
           return retval

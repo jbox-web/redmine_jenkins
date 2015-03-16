@@ -8,7 +8,8 @@ module RedmineJenkins
         base.class_eval do
           unloadable
 
-          has_and_belongs_to_many :jenkins_builds
+          has_many :changesets_jenkins_builds
+          has_many :jenkins_builds, through: :changesets_jenkins_builds
         end
       end
 
