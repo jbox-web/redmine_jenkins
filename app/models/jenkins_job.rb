@@ -9,9 +9,10 @@ class JenkinsJob < ActiveRecord::Base
   attr_accessible :name, :repository_id, :builds_to_keep
 
   ## Validations
-  validates :project_id,         presence: true
-  validates :repository_id,      presence: true
-  validates :name,               presence: true, uniqueness: { scope: :project_id }
+  validates :project_id,     presence: true
+  validates :repository_id,  presence: true
+  validates :name,           presence: true, uniqueness: { scope: :project_id }
+  validates :builds_to_keep, presence: true
 
   ## Serializations
   serialize :health_report, Array

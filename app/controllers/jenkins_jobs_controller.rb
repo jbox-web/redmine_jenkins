@@ -20,7 +20,7 @@ class JenkinsJobsController < ApplicationController
 
   def new
     @job  = @project.jenkins_jobs.new
-    @jobs = @project.jenkins_setting.get_jobs_list - @project.jenkins_jobs.map(&:name)
+    @jobs = available_jobs
   end
 
 
@@ -32,7 +32,7 @@ class JenkinsJobsController < ApplicationController
       flash[:error] = result.message_on_errors if !result.success?
       render_js_redirect
     else
-      render_js_form_error
+      @jobs = available_jobs
     end
   end
 
@@ -49,7 +49,7 @@ class JenkinsJobsController < ApplicationController
       flash[:error] = result.message_on_errors if !result.success?
       render_js_redirect
     else
-      render_js_form_error
+      @jobs = available_jobs
     end
   end
 
@@ -113,10 +113,8 @@ class JenkinsJobsController < ApplicationController
     end
 
 
-    def render_js_form_error
-      respond_to do |format|
-        format.js { render 'form_error', layout: false }
-      end
+    def available_jobs
+      @project.jenkins_setting.get_jobs_list - @project.jenkins_jobs.map(&:name)
     end
 
 end

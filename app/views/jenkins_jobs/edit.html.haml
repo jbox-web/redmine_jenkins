@@ -2,7 +2,7 @@
                     url:  jenkins_job_path(@project, @job),
                     html: { method: :put, class: 'tabular', remote: true } do |f|
 
-  #validation_messages_job= error_messages_for 'job'
+  .flash-messages= error_messages_for 'job'
 
   %p= f.select :name, options_for_select(@jobs.collect {|job| [job, job]}, [@job.name, @job.name]), {}, { disabled: true }
   %p= f.select :repository_id, options_for_select(@project.repositories.collect {|r| [ r.identifier.blank? ? 'default' : r.identifier, r.id ]}, render_selected_repo(@job))
