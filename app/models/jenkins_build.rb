@@ -18,6 +18,11 @@ class JenkinsBuild < ActiveRecord::Base
   ## Scopes
   scope :ordered, -> { order('number DESC')  }
 
+  scope :visible, lambda { |*args|
+    joins(jenkins_job: :project).
+    where(Project.allowed_to_condition(args.shift || User.current, :view_build_activity, *args))
+  }
+
   ## Redmine Events
   acts_as_event :datetime    => :finished_at,
                 :title       => :event_name,
@@ -26,12 +31,19 @@ class JenkinsBuild < ActiveRecord::Base
                 :url         => :event_url,
                 :type        => 'build_activity'
 
-  acts_as_activity_provider :type         => 'build_activity',
-                            :permission   => :view_build_activity,
-                            :timestamp    => "#{table_name}.finished_at",
-                            :author_key   => :author_id,
-                            :find_options => {:include => {:jenkins_job => :project}}
-
+  # Redmine 2.X
+  if Rails::VERSION::MAJOR == 3
+    acts_as_activity_provider :type         => 'build_activity',
+                              :permission   => :view_build_activity,
+                              :timestamp    => "#{table_name}.finished_at",
+                              :author_key   => :author_id,
+                              :find_options => {:include => {:jenkins_job => :project}}
+  else
+    acts_as_activity_provider :type         => 'build_activity',
+                              :timestamp    => "#{table_name}.finished_at",
+                              :author_key   => :author_id,
+                              :scope        => preload({:jenkins_job => :project})
+  end
 
   class << self
 
