@@ -1,10 +1,5 @@
 module JenkinsHelper
 
-  def user_allowed_to(permission, project)
-    return User.current.allowed_to?(permission, project)
-  end
-
-
   def state_to_css_class(state)
     case state.downcase
     when 'success'
