@@ -1,6 +1,6 @@
 class CreateJenkinsBuilds < ActiveRecord::Migration
 
-  def up
+  def change
     create_table :jenkins_builds do |t|
       t.integer  :jenkins_job_id
       t.integer  :number
@@ -10,10 +10,9 @@ class CreateJenkinsBuilds < ActiveRecord::Migration
       t.boolean  :building
       t.integer  :duration
     end
-  end
 
-  def down
-    drop_table :jenkins_builds
+    add_index :jenkins_builds, :jenkins_job_id
+    add_index :jenkins_builds, :author_id
   end
 
 end

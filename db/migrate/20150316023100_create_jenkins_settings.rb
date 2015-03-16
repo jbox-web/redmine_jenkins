@@ -1,6 +1,6 @@
 class CreateJenkinsSettings < ActiveRecord::Migration
 
-  def up
+  def change
     create_table :jenkins_settings do |t|
       t.integer :project_id
       t.string  :url
@@ -10,10 +10,8 @@ class CreateJenkinsSettings < ActiveRecord::Migration
       t.boolean :get_build_details, default: true
       t.boolean :wait_for_build_id, default: false
     end
-  end
 
-  def down
-    drop_table :jenkins_settings
+    add_index :jenkins_settings, :project_id, unique: true
   end
 
 end

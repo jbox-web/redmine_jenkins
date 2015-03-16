@@ -1,10 +1,9 @@
 class CreateJenkinsJobs < ActiveRecord::Migration
 
-  def up
+  def change
     create_table :jenkins_jobs do |t|
       t.integer  :project_id
       t.integer  :repository_id
-      t.integer  :jenkins_setting_id
       t.string   :name
       t.integer  :latest_build_number
       t.datetime :latest_build_date
@@ -16,10 +15,10 @@ class CreateJenkinsJobs < ActiveRecord::Migration
       t.datetime :created_at
       t.datetime :updated_at
     end
-  end
 
-  def down
-    drop_table :jenkins_jobs
+    add_index :jenkins_jobs, :project_id
+    add_index :jenkins_jobs, :repository_id
+    add_index :jenkins_jobs, [:project_id, :name], unique: true
   end
 
 end
