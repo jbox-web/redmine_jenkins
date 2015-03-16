@@ -1,11 +1,3 @@
-= paginate builds, :reverse        => false,
-                   :remote         => true,
-                   :next_label     => '&raquo;',
-                   :previous_label => '&laquo;',
-                   :param_name     => :page,
-                   :class          => 'pagination pagination-small pagination-centered',
-                   :params         => { controller: 'jenkins_jobs', action: 'history' }
-
 %table{ class: 'table table-hover' }
   %thead
     %tr
@@ -26,3 +18,5 @@
             %span{ class: 'icon icon-running' }
 
         %td= format_time build.finished_at
+
+= paginate builds, params: { controller: 'jenkins_jobs', action: 'history' }
