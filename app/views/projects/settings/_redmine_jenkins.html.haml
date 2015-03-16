@@ -45,10 +45,4 @@
   = render partial: 'projects/settings/jobs_list'
 
 :javascript
-  $(document).ready(function() {
-    $('.bootstrap-switch').each(function(index, element) {
-      installBootstrapSwitch(element);
-    });
-
-    initModalBoxes(modals);
-  });
+  $(document).ready(function() { setBootstrapSwitch(); initModalBoxes(modals); });
