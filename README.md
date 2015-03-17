@@ -17,11 +17,9 @@ Read the documentation and more in the [Wiki](https://github.com/jbox-web/redmin
 
 ## Copyrights & License
 
-Redmine Jenkins is completely free and open source and released under the [GPL 2 License](https://github.com/jbox-web/redmine_jenkins/blob/devel/LICENSE).
+Redmine Jenkins is completely free and open source and released under the [MIT License](https://github.com/jbox-web/redmine_jenkins/blob/devel/LICENSE).
 
 Copyright (c) 2014-2015 Nicolas Rodriguez (nrodriguez@jbox-web.com), JBox Web (http://www.jbox-web.com) [![endorse](https://api.coderwall.com/n-rodriguez/endorsecount.png)](https://coderwall.com/n-rodriguez)
-
-Copyright (c) 2012-2014 Toshiyuki Ando, r-labs
 
 ## Contribute
 
