@@ -4,6 +4,8 @@ class JenkinsSetting < ActiveRecord::Base
   ## Relations
   belongs_to :project
 
+  attr_accessible :url, :auth_user, :auth_password, :show_compact, :wait_for_build_id
+
   ## Validations
   validates :project_id, presence: true, uniqueness: true
   validates :url,        presence: true
