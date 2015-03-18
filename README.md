@@ -10,8 +10,6 @@
 
 This plugin allows straightforward management of Jenkins projects within Redmine.
 
-You can follow announcements [here](https://github.com/jbox-web/redmine_jenkins/wiki/Announcements) or take a look at the [roadmap](https://github.com/jbox-web/redmine_jenkins/wiki/Roadmap).
-
 ## Installation
 
 Read the documentation and more in the [Wiki](https://github.com/jbox-web/redmine_jenkins/wiki).
