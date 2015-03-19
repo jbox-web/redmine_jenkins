@@ -8,7 +8,7 @@ Redmine::Plugin.register :redmine_jenkins do
   name 'Redmine Jenkins plugin'
   author 'Toshiyuki Ando r-labs, Nicolas Rodriguez'
   description 'This is a Jenkins plugin for Redmine'
-  version '0.1'
+  version '1.0-devel'
   url 'https://github.com/jbox-web/redmine_jenkins'
   author_url 'https://github.com/jbox-web'
 
