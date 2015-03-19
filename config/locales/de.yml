@@ -45,6 +45,7 @@ de:
   label_build_accepted: "%{job_name}, Auftrag %{build_id} gestartet"
   label_linked_repository: zugehöriges Archiv
   label_job_duration: Dauer
+  label_display_more: Display more
 
   notice_job_added: Aufgabe hinzugefügt
   notice_job_add_failed: Hinzufügen der Aufgabe gescheitert

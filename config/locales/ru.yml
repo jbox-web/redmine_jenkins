@@ -45,6 +45,7 @@ ru:
   label_build_accepted: "%{job_name}, сборка %{build_id} запущена"
   label_linked_repository: Присоединенное хранилище
   label_job_duration: Продолжительность
+  label_display_more: Display more
 
   notice_job_added: Задача добавлена
   notice_job_add_failed: Ошибка при добавлении задачи

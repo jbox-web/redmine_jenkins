@@ -45,6 +45,7 @@ fr:
   label_build_accepted: "%{job_name}, construction lancée %{build_id}"
   label_linked_repository: Dépôt lié
   label_job_duration: Durée
+  label_display_more: Voir la suite
 
   notice_job_added: Job ajouté
   notice_job_add_failed: Erreur lors de l'ajout du job

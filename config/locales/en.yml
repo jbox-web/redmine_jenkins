@@ -45,6 +45,7 @@ en:
   label_build_accepted: "%{job_name}, build %{build_id} started"
   label_linked_repository: Linked repository
   label_job_duration: Duration
+  label_display_more: Display more
 
   notice_job_added: Job added
   notice_job_add_failed: Adding job failed

@@ -43,6 +43,7 @@ pl:
   label_build_accepted: "%{job_name}, test %{build_id} rozpoczęty"
   label_linked_repository: Przypisane repozytorium
   label_job_duration: Czas trwania
+  label_display_more: Display more
 
   notice_job_added: Zadanie dodane
   notice_job_add_failed: Dodawanie zadania nieudane

@@ -18,3 +18,7 @@ ul.changesets_list li p {
 ul.changesets_list li p.revision {
   padding-right: 7px;
 }
+
+div.changesets.invisible {
+  display: none;
+}

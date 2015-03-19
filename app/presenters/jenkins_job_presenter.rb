@@ -47,7 +47,7 @@ class JenkinsJobPresenter < SimpleDelegator
   end
 
 
-  def job_history
+  def build_history
     link_to_history
   end
 
@@ -72,7 +72,7 @@ class JenkinsJobPresenter < SimpleDelegator
 
 
     def render_health_report
-      content_tag(:ul, render_report_list)
+      content_tag(:ul, render_report_list, class: 'list-unstyled')
     end
 
 
@@ -112,11 +112,38 @@ class JenkinsJobPresenter < SimpleDelegator
 
 
     def render_changesets_list(changesets)
+      visible_changesets = changesets.take(5)
+      invisible_changesets = changesets - visible_changesets
+      render_visible_changesets(visible_changesets) + render_invisible_changesets(invisible_changesets)
+    end
+
+
+    def render_visible_changesets(changesets)
+      render_changesets(changesets, visible: true)
+    end
+
+
+    def render_invisible_changesets(changesets)
+      render_display_more + render_changesets(changesets, visible: false) if !changesets.empty?
+    end
+
+
+    def render_changesets(changesets, opts = {})
+      visible = opts.delete(:visible){ true }
+      css_class = visible ? 'changesets visible' : 'changesets invisible'
+      id = visible ? "changesets-visible-#{jenkins_job.id}" : "changesets-invisible-#{jenkins_job.id}"
+
       s = ''
       changesets.each do |changeset|
         s << content_tag(:li, content_for_changeset(changeset).html_safe)
       end
-      s.html_safe
+
+      content_tag(:div, s.html_safe, class: css_class, id: id)
+    end
+
+
+    def render_display_more
+      link_to l(:label_display_more), '#', onclick: "$('#changesets-invisible-#{jenkins_job.id}').toggle(); return false;"
     end
 
 
