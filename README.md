@@ -7,7 +7,7 @@
 [![Dependency Status](https://gemnasium.com/jbox-web/redmine_jenkins.svg)](https://gemnasium.com/jbox-web/redmine_jenkins)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jbox-web/redmine_jenkins?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-## A Redmine plugin which makes building your Jenkins projects easy ;)
+### A Redmine plugin which makes building your Jenkins projects easy ;)
 
 This plugin allows straightforward management of Jenkins projects within Redmine.
 
