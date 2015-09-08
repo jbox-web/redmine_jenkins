@@ -31,7 +31,41 @@
 <h2>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
 
-<p>Read the documentation and more in the <a href="https://github.com/jbox-web/redmine_jenkins/wiki">Wiki</a>.</p>
+<p>Assuming that you have Redmine installed :</p>
+
+<div class="highlight highlight-sh"><pre><span class="pl-c">## Before install the plugin, stop Redmine!</span>
+
+<span class="pl-c"># Switch user</span>
+root# su - redmine
+
+<span class="pl-c"># First git clone Bootstrap Kit</span>
+redmine$ <span class="pl-c1">cd</span> REDMINE_ROOT/plugins
+redmine$ git clone https://github.com/jbox-web/redmine_bootstrap_kit.git
+redmine$ <span class="pl-c1">cd</span> redmine_bootstrap_kit/
+redmine$ git checkout 0.2.3
+
+<span class="pl-c"># Then Redmine Jenkins plugin</span>
+redmine$ <span class="pl-c1">cd</span> REDMINE_ROOT/plugins
+redmine$ git clone https://github.com/jbox-web/redmine_jenkins.git
+redmine$ <span class="pl-c1">cd</span> redmine_jenkins/
+redmine$ git checkout 1.0.1
+
+<span class="pl-c"># Install gems and migrate database</span>
+redmine$ <span class="pl-c1">cd</span> REDMINE_ROOT/
+redmine$ bundle install --without development <span class="pl-c1">test</span>
+redmine$ bundle <span class="pl-c1">exec</span> rake redmine:plugins:migrate RAILS_ENV=production NAME=redmine_jenkins
+
+<span class="pl-c">## After install the plugin, start Redmine!</span></pre></div>
+
+<h2>
+<a id="troubleshooting" class="anchor" href="#troubleshooting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Troubleshooting</h2>
+
+<blockquote>
+<p>I got a problem, when using apache2, passenger and git-gems, like this: <a href="http://stackoverflow.com/questions/6648870/is-not-checked-out-bundle-install-does-not-fix-help">http://stackoverflow.com/questions/6648870/is-not-checked-out-bundle-install-does-not-fix-help</a></p>
+</blockquote>
+
+<div class="highlight highlight-sh"><pre><span class="pl-c"># in case you are running apache2 with passenger, try this:</span>
+redmine$ bundle install --deployment</pre></div>
 
 <h2>
 <a id="contribute" class="anchor" href="#contribute" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contribute</h2>
