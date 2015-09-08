@@ -1,5 +1,7 @@
 ## ![logo](https://raw.github.com/jbox-web/redmine_jenkins/gh-pages/images/jenkins_logo.png) Redmine Jenkins Plugin
 
+[![GitHub license](https://img.shields.io/github/license/jbox-web/redmine_jenkins.svg)](https://github.com/jbox-web/redmine_jenkins/blob/devel/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/jbox-web/redmine_jenkins.svg)](https://github.com/jbox-web/redmine_jenkins/releases/latest)
 [![Code Climate](https://codeclimate.com/github/jbox-web/redmine_jenkins.png)](https://codeclimate.com/github/jbox-web/redmine_jenkins)
 [![Build Status](https://travis-ci.org/jbox-web/redmine_jenkins.svg?branch=devel)](https://travis-ci.org/jbox-web/redmine_jenkins)
 [![Dependency Status](https://gemnasium.com/jbox-web/redmine_jenkins.svg)](https://gemnasium.com/jbox-web/redmine_jenkins)
@@ -13,12 +15,6 @@ This plugin allows straightforward management of Jenkins projects within Redmine
 ## Installation
 
 Read the documentation and more in the [Wiki](https://github.com/jbox-web/redmine_jenkins/wiki).
-
-## Copyrights & License
-
-Redmine Jenkins is completely free and open source and released under the [MIT License](https://github.com/jbox-web/redmine_jenkins/blob/devel/LICENSE).
-
-Copyright (c) 2014-2015 Nicolas Rodriguez (nrodriguez@jbox-web.com), JBox Web (http://www.jbox-web.com) [![endorse](https://api.coderwall.com/n-rodriguez/endorsecount.png)](https://coderwall.com/n-rodriguez)
 
 ## Contribute
 
