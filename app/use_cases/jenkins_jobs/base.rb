@@ -63,8 +63,8 @@ module JenkinsJobs
         jenkins_job.description           = job_data['description'] || ''
         jenkins_job.health_report         = job_data['healthReport']
         jenkins_job.latest_build_number   = !job_data['lastBuild'].nil? ? job_data['lastBuild']['number'] : 0
-        jenkins_job.latest_build_date     = jenkins_job.builds.first.finished_at rescue ''
-        jenkins_job.latest_build_duration = jenkins_job.builds.first.duration rescue ''
+        jenkins_job.latest_build_date     = jenkins_job.builds.last.finished_at rescue ''
+        jenkins_job.latest_build_duration = jenkins_job.builds.last.duration rescue ''
         jenkins_job.save!
         jenkins_job.reload
         true
