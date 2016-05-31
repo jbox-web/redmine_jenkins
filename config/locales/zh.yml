@@ -1,0 +1,84 @@
+zh:
+  label_jenkins: Jenkins
+  label_build_activity_plural: Jenkins
+
+  ### SETTINGS
+  label_jenkins_url: Jenkins URL
+  label_jenkins_url_desc: '以 http://, https:// ... 开头'
+  label_show_compact: 显示简洁视图
+  label_wait_for_build_id: "Wait for build id"
+  label_test_connection: 测试Jenkins连接配置
+  label_jenkins_version: Jenkins版本
+  label_jenkins_jobs_count: Jenkins中的任务数量
+
+  notice_settings_created: 配置已创建。
+  notice_settings_updated: 配置已更新。
+  notice_settings_update_failed: 配置无法更新。请检查相关配置项。
+
+  label_jobs_list: 任务列表
+  label_jobs_list_empty: 暂无Jenkins任务
+  label_update_jobs_list: 更新任务列表
+  label_number_of_stored_builds: 在Redmine中保存的构建数量
+  label_number_of_jenkins_builds: 在Jenkins中的构建数量
+  label_number_of_builds_to_keep: 在Redmine中的构建上限数量
+  label_last_changesets: 最近变更
+  label_add_jenkins_job: 添加Jenkins任务
+
+  error_http_error: "HTTP Error %{code}"
+  error_invalid_url: URL不可用
+  error_no_settings: "当前项目未设置。请确认 <a href='%{url}'>Jenkins设置</a>。"
+  error_jenkins_connection: 无法连接到Jenkins！
+
+  ### JOBS
+  label_job_name: 任务名称
+  label_latest_build: 最近一次构建
+  label_job_state: 状态
+  label_job_history: 历史记录
+  label_see_history: 查看历史记录
+  label_build_now: 现在运行
+  label_refresh_jobs: 刷新任务列表
+  label_refresh_builds: 刷新构建列表
+  label_build_number: 构建№
+  label_build_result: 结果
+  label_finished_at: 结束时间
+  label_see_console_output: 查看控制台输出
+  label_build_accepted: "%{job_name}, 构建№ %{build_id} 已启动。"
+  label_linked_repository: 关联版本库
+  label_job_duration: 执行用时
+  label_display_more: 显示更多
+
+  notice_job_added: 任务已添加。
+  notice_job_add_failed: 添加任务失败。
+  notice_job_deleted: 任务已删除。
+
+  field_repository: 版本库
+  field_job_name: 任务名称
+  field_builds_to_keep: 保留的构建数量
+
+  ### ACTIVITY
+  label_build: 构建
+
+  ### PERMISSIONS
+  permission_view_jenkins_jobs: 查看Jenkins任务
+  permission_build_jenkins_jobs: 运行Jenkins任务
+  permission_view_build_activity: 查看构建活动
+  permission_edit_jenkins_settings: 编辑Jenkin配置
+
+  ### QUERY
+  field_jenkins_job: Jenkins任务
+  field_jenkins_build: Jenkins构建
+
+  use_cases:
+    jenkins_job:
+      create_builds:
+        success: "任务 '%{jenkins_job}' 已创建。"
+        failed: "创建任务 '%{jenkins_job}' 时报错。错误信息：%{errors}"
+      trigger_build:
+        success: "任务 '%{jenkins_job}' 正在运行。"
+        failed: "运行任务 '%{jenkins_job}' 时报错。错误信息：%{errors}"
+      update_all_builds:
+        success: "任务 '%{jenkins_job}' 构建已更新"
+        failed: "更新任务 '%{jenkins_job}' 的构建时报错。错误信息：%{errors}"
+      update_last_build:
+        success: "任务 '%{jenkins_job}' 最近一次构建已更新。"
+        failed: "当更新任务 '%{jenkins_job}' 最近一次构建时报错。错误信息：%{errors}"
