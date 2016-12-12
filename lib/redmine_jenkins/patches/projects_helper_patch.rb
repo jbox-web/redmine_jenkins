@@ -25,6 +25,7 @@ module RedmineJenkins
             :label   => :label_jenkins
           })
           tabs.select {|tab| User.current.allowed_to?(tab[:action], @project)}
+          tabs
         end
 
       end
